@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+
+#faq { width: 1024px; margin: 10px auto;  font: normal 14px "Lucida Grande",Verdana,Arial,sans-serif; color: #333333; }
+#faq h1 { text-align: center;  }
+#faq p { margin: 10px auto; width: 1000px; }
+#faq .question ul { padding-left: 50px; font: normal 14px "Lucida Grande",Verdana,Arial,sans-serif; width: 950px; }
+#faq .question ul p { margin: 0; padding: 0.5em 0; }
+#faq .question li .subtext { font: normal 12px "Lucida Grande",Verdana,Arial,sans-serif; padding-left: 25px; width: 925px; }
+
+#faq .header { margin-top: 40px; }

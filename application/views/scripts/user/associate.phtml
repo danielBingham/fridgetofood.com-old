@@ -1,0 +1,27 @@
+<?php
+    $helper = new Application_View_Helper_SocialMedia();
+?>
+
+<div id="userAssociate">
+    <div class="header">
+        <div class="title">Associate Social Media Accounts</div>
+        <div class="controls"></div>
+    </div>
+    <div id="associationWrapper">
+        <div id="facebook" class="associate"> 
+            <div class="login">
+                <a href="<?php echo $helper->getFacebookLink('/user/associate/which/facebook'); ?>"><img src="/img/facebookFull.jpg" /></a>
+            </div>    
+        </div>
+        <div id="google" class="associate"> 
+            <div class="login">
+                <a href="<?php echo $helper->getGoogleLink('/user/associate/which/google'); ?>"><img src="/img/googleFull.jpg" /></a>
+            </div> 
+        </div>
+        <div id="twitter" class="associate"> 
+            <div class="login">
+                <a href=""><img src="/img/twitterFull.jpg" /></a>
+            </div>
+        </div>
+    </div>
+</div>

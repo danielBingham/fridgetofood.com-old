@@ -1,0 +1,66 @@
+<div class="header">
+	<div class="title">Editing Profile for <?php echo $this->user->getDisplayName(); ?></div>
+</div>
+<div id="userEdit">
+<form method="post" action="/user/edit/" accept-charset="utf-8" enctype="multipart/form-data">
+    <div class="input password">
+        <label for="user[password]">Current Password</label>
+        <input type="password" name="user[password]" <?php echo ($this->user->getPassword() ? '' : 'disabled="disabled"'); ?> />
+        <?php if(isset($this->errors['password'])) { ?>
+            <div class="error"><?php echo $this->errors['password']; ?></div>
+        <?php } ?>
+    </div>
+    <p>If you want to change your e-mail or your password, you'll need to enter your current password above.  If you
+    aren't changing either of those things, you can just leave it blank. If you created this account with Facebook,
+    Google, or Twitter then your password and e-mail aren't set yet.  You can set them below with out entering a (non-existent)
+    current password.</p>
+    <div class="input text">
+        <label for="user[email]">Email</label>
+        <input name="user[email]" type="text" maxlength="255" value="<?php echo $this->user->getEmail(); ?>" />
+        <?php if(isset($this->errors['email'])) { ?>
+            <div class="error"><?php echo $this->errors['email']; ?></div>
+        <?php } ?>
+    </div> 
+    <div class="input password">
+        <label for="user[newPassword]">New Password</label>
+        <input type="password" name="user[newPassword]" />
+        <?php if(isset($this->errors['newPassword'])) { ?>
+            <div class="error"><?php echo $this->errors['newPassword']; ?></div>
+        <?php } ?>
+    </div>
+    <div class="input password">
+        <label for="user[confirmNewPassword]">Confirm New Password</label>
+        <input type="password" name="user[confirmNewPassword]" />
+        <?php if(isset($this->errors['confirmNewPassword'])) { ?>
+            <div class="error"><?php echo $this->errors['confirmNewPassword']; ?></div>
+        <?php } ?>
+    </div>
+    <p>Everything below may be changed without entering your password.</p>
+    <div class="input text">
+        <label for="user[displayName]">Display Name</label>
+        <input name="user[displayName]" type="text" maxlength="255" value="<?php echo $this->user->getDisplayName(); ?>" />
+    </div>
+    <div class="input text">
+        <label for="user[website]" >Website Name</label>
+        <input name="user[website]" type="text" maxlength="255" value="<?php echo $this->user->getWebsite(); ?>" />
+    </div>
+    <div class="input text">
+        <label for="user[websiteURL]">Website URL</label>
+        <input name="user[websiteURL]" type="text" value="<?php echo $this->user->getWebsiteURL(); ?>" maxlength="511" />
+    </div>
+    <div class="input text">
+        <label for="image">Profile Photo</label>
+        <input name="image" type="file" />
+        <?PHP if(isset($this->errors['image'])) { ?>
+            <?PHP foreach($this->errors['image'] as $error) { ?>
+                <div class="error"><?PHP echo $error; ?></div>
+            <?PHP } ?>
+        <?PHP } ?>
+    </div>
+    <div class="input textarea">
+        <label for="user[about]">About</label>
+        <textarea name="user[about]" cols="30" rows="6" ><?php echo $this->user->getAbout(); ?></textarea>
+    </div>     
+    <div class="submit"><input type="submit" value="Edit Profile" /></div>
+</form>
+</div>

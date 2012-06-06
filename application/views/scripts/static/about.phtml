@@ -1,0 +1,66 @@
+<div id="aboutPage">
+
+    <div class="subheader">
+        <div class="title">What is Fridge to Food?</div>
+    </div>
+
+    <p>Fridge to Food is a collaborative cookbook.  It is a place to share recipes with other
+    foodies and earn reputation for the recipes you share.  It is a place to come to find
+    cool new recipes to try, or to find recipes to make with what you have on hand.</p>
+
+
+    <div class="subheader">
+        <div class="title">What is Reputation?</div>
+    </div>
+
+    <p>Reputation is a number that measures how much the Fridge To Food community trusts you as a user and
+    as a chef.  You will earn reputation when you share recipes that other users like, and then upvote.  You 
+    will lose reputation when you share recipes that other users don't like, and downvote.</p>
+
+    <p>You will earn the most reputation for upvotes on recipes that you originated, but you also earn some
+    reputation for upvotes on photographs you post and for community recipes you share.  You can
+    grain reputation in the following ways: </p>
+
+    <div style="margin: 30px auto; width: 600px;">
+        <ul>
+            <li>You will gain 10 reputation for upvotes on recipes you originated.</li>
+            <li>You will lose 10 reputation for downvotes on recipes you originated.</li>
+            <li>You will gain 5 reputation for upvotes on photographs you post.</li>
+            <li>You will lose 5 reputation for downvotes on photographs you post.</li>
+            <li>You will gain 2 reputation for upvotes on community recipes you share.</li>
+            <li>You will lose 2 reputation for downvotes on community recipes you share.</li>
+        </ul>
+    </div>
+
+    <div class="subheader">
+        <div class="title">What are Ribbons?</div>
+    </div>
+	<p>Ribbons are little badges of honor earned when you complete certain tasks or milestones. 
+    Green ribbons mark simple milestones, reached through normal use of the site. 
+	White ribbons are earned by users who actively post, vote, and comment.  
+    Red ribbons mark major milestones that will be reached only by very dedicated users and good chefs.
+	Finally, blue ribbons are earned only by a very few for excellent recipes and photographs.</p>
+	<?php foreach(Application_Model_Query_Ribbon::getInstance()->fetchAll() as $ribbon) { ?>
+		<div class="ribbonWrapper">
+			<div class="ribbonCount">
+				<div class="ribbon <?php echo $ribbon->getType(); ?>">
+					 <?php echo $ribbon->getDisplayName(); ?>
+				</div> <div class="count"> x <?php echo $ribbon->getNumberEarned(); ?></div>
+			</div>
+			<span class="description"><?php echo $ribbon->getDescription(); ?></span>
+		</div>
+	<?php } ?>
+
+    <div class="subheader"> 
+        <div class="title">Who are you?</div> 
+    </div> 
+    <p>
+        <span style="display: inline-block; float: left; margin: 0 10px 10px 0;">
+            <iframe src="<?PHP echo Zend_Registry::get('config')->hosts->home; ?>/ajax/badge/id/2" style="border: none; padding: 0; margin: 0; width: 300px;">
+                <p>Your browser does not support iframes.</p>
+            </iframe>
+        </span>
+        Hey, I'm Daniel, your humble host.  By day, I'm a host and prep worker at a local restaurant.  By night, I write code, plant and tend gardens, cook and play Ultimate.  I live in Bloomington, Indiana where I'm a prospective member of the <a href="http://www.dandelionvillage.org">Dandelion Village</a> and a member of the board of directors of the <a href="http://www.bloomingtoncommunityorchard.org/site">Bloomington Community Orchard</a>.  I care deeply about food and sustainabily.  Fridge to Food is one of my attempts to make it easier for people eat locally and eat more healthily.  By making it easier to find great recipes, I hope to encourage people to cook more and eat better!  My other project, <a href="http://www.farmtofridge.net">Farm to Fridge</a> is an open source online farmer's market, aimed at making it easier for farmers to sell their products locally.   
+    </p>
+
+</div>

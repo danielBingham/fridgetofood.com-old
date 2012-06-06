@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+
+#earnRibbons { width: 1000px; margin: 0 auto; padding: 10px 0;   }
+#earnRibbons p { padding: .5em 0; }
+#earnRibbons #ribbonList p { width: 900px; margin: 0 auto; }
+#earnRibbons .ribbonWrapper { margin: 0 auto; padding: 10px; text-align: left; width: 800px; }
+#earnRibbons .ribbonWrapper .ribbonCount { display: inline-block; width: 350px; padding: 0 10px;  }
+#earnRibbons .ribbonWrapper .ribbonCount .count { display: inline-block; }
+#earnRibbons .ribbon { 
+	display: inline-block; padding: 10px; color: white; margin: 0 5px; 
+	-moz-border-radius: 6px;  -khtml-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; 
+		box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+}
+#earnRibbons .ribbon.red { background-color: #A62525; }
+#earnRibbons .ribbon.blue { background-color: #2872A6; }
+#earnRibbons .ribbon.white { color: #666666; }
+#earnRibbons .ribbon.rainbow { background-color: #25A625; }

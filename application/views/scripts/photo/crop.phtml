@@ -1,0 +1,14 @@
+<div id="productCrop" class="inner" >
+    <img id="cropbox" src="<?php echo Zend_Registry::get('config')->hosts->image; ?>/large/<?php echo $this->image->getImageID(); ?>.jpg" />
+    <form method="POST" 
+        action="/photo/crop/image/<?php echo $this->image->getImageID(); ?>
+                <?PHP echo (isset($this->recipe) ? '/recipe/' . $this->recipe->getRecipeID() : '/user/' . $this->user->getUserID()); ?>">
+        <input type="hidden" name="x" value="0" />
+        <input type="hidden" name="y" value="0" />
+        <input type="hidden" name="width"  value="<?php echo $this->image->getWidth(); ?>" />
+        <input type="hidden" name="height" value="<?php echo $this->image->getHeight(); ?>" />
+        <input type="submit" value="Crop Image" />
+    </form> 
+
+</div>
+

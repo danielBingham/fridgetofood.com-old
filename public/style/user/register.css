@@ -1,0 +1,12 @@
+#userRegister { text-align: center; width: 550px; margin: 10px auto; font: normal 14px 'Lucida Grande',Verdana,Arial,sans-serif; }
+#userRegister p, #otherLogins p { text-align: center; padding: 1em 0; }
+#userRegister label { display: inline-block; text-align: left; width: 100px; padding: 5px 0; font-size: 16px; }
+#userRegister .errors { }
+#userRegister .input { padding: 5px 0; }
+#userRegister .input input { width: 400px; font-size: 16px; padding: 0.25em; }
+#userRegister .submit input { padding: 5px; font-size: 16px; }
+#userRegister .submit { padding: 10px; }
+
+#userRegister #humanity { vertical-align: middle; }
+#userRegister #humanity label { width: 300px; }
+#userRegister #humanity input { width: 200px; }

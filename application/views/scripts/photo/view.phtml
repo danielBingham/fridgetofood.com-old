@@ -1,0 +1,51 @@
+<div class="header">
+	<div class="title"><?PHP echo $this->image->getRecipe()->getTitle(); ?></div>
+	<div class="controls">
+        <?PHP if(Zend_Auth::getInstance()->hasIdentity() 
+                && Zend_Auth::getInstance()->getIdentity()->getUserID() == $this->image->getRecipe()->getUserID()) { ?>
+            <a href="/photo/crop/image/<?PHP echo $this->image->getImageID(); ?>/recipe/<?PHP echo $this->image->getRecipe()->getRecipeID(); ?>">Crop</a>
+        <?PHP } ?>
+		<a href="/gallery/<?PHP echo $this->image->getRecipe()->getRecipeID(); ?>">Return to gallery</a> 
+	</div>
+</div>
+<div id="imagesView">
+	<div id="navLinks">
+		<?PHP if($this->paginator->getNextItem() !== NULL) { ?>
+				<a class="next" href="/photo/view/id/<?PHP echo $this->paginator->getNextItem()->getImageID(); ?>">Next</a>
+		<?PHP }
+			if($this->paginator->getPrevItem() !== NULL) { ?>
+				<a class="prev" href="/photo/view/id/<?PHP echo $this->paginator->getPrevItem()->getImageID(); ?>">Previous</a>
+		<?PHP } ?>
+		<div class="clear"></div>
+	</div> 
+	<img src="<?PHP echo Zend_Registry::get('config')->hosts->image . DIRECTORY_SEPARATOR . 'large' . DIRECTORY_SEPARATOR . $this->image->getImageID(); ?>.jpg" />
+	<div id="poster">
+		<?PHP 
+		if($this->image->getUser()->getProfileImage() && $this->image->getUser()->getProfileImage()->fileExists()) { ?>
+			<div class=" image" style="background-image: url(<?PHP echo Zend_Registry::get('config')->hosts->image . DIRECTORY_SEPARATOR . 'small' . DIRECTORY_SEPARATOR . $this->image->getUser()->getProfileImage()->getImageID(); ?>.jpg)"></div>
+		<?PHP } else { ?>
+			<div class="image" style="background-color: #EEEEEE;"></div>
+		<?PHP } ?>
+		posted <?PHP echo $this->image->getCreated(); ?> 
+		by<br />
+		<a href="/user/profile/id/<?PHP echo $this->image->getUser()->getUserID(); ?>"><?PHP echo $this->image->getUser()->getDisplayName(); ?></a>(<?PHP echo $this->image->getUser()->getReputation(); ?>)
+		<?PHP $this->renderUserRibbons($this->image->getUser()); ?>
+	</div>
+	<div id="votesWrapper" >
+		<div id="votes" >
+            <?PHP if(Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getIdentity()->getUserID() != $this->image->getUserID()) { ?>
+                <input id="data" type="hidden" value="<?PHP echo $this->image->getImageID(); ?>" />
+            <?PHP } ?>
+			<p class=" voteTally"><?PHP echo $this->image->getVotes(); ?></p>
+			<p class=" voteLabel">votes</p>
+			<?PHP if(Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getIdentity()->getUserID() != $this->image->getUserID()){ ?>
+			<a class=" thumbsUp <?PHP echo (isset($this->vote) && $this->vote == 1 ? 'highlight' : ''); ?>" 
+                href="Javascript:;" 
+                title="Click here to declare your love of this photo and vote it up!"></a>
+			<a class=" thumbsDown <?PHP echo (isset($this->vote) && $this->vote == -1 ? 'highlight' : ''); ?>" 
+                href="Javascript:;" 
+                title="Click here to vote this photo down and tell the world that you don't like it one bit."></a>
+            <?PHP } ?>
+    	</div>
+	</div>
+</div>

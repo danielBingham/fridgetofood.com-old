@@ -1,0 +1,21 @@
+<div class="header">
+	<div class="title"><?php echo $this->tag->getName(); ?> -- <?php echo $this->tag->getType(); ?></div>
+	<div class="controls">
+	</div>
+</div>
+<div id="tagView">
+	<?php echo $this->tag->getDescription(); ?>
+	<div class="header">
+		<div class="title">
+			Browsing <?php echo $this->paginator->getTotalItemCount(); ?> recipes tagged <?php echo $this->tag->getName(); ?>
+		</div>
+		<div class="controls">
+			<a href="/tags/view/id/<?php echo $this->tag->getTagID(); ?>/order/votes">Most Votes</a>
+			<a href="/tags/view/id/<?php echo $this->tag->getTagID(); ?>/order/views">Most Views</a>
+			<a href="/tags/view/id/<?php echo $this->tag->getTagID(); ?>/order/newest">Newest</a>
+		</div>
+	</div>
+	<?php
+		$this->renderItemPager($this->paginator,  'renderRecipeBox');
+	?>
+</div>

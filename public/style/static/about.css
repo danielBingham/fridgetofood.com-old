@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+
+
+
+#aboutPage { width: 1024px; margin: 25px auto;  font: normal 14px Verdana,Arial,sans-serif; color: #333333; }
+#aboutPage h1 { text-align: center; }
+#aboutPage h2 { padding: 10px 0; }
+#aboutPage p { margin: 10px auto; width: 900px; }
+
+#aboutPage .header, #aboutPage .subheader { margin: 40px auto 20px auto; }
+
+#aboutPage #ribbonList p { width: 900px; margin: 0 auto; }
+#aboutPage .ribbonWrapper { margin: 0 auto; padding: 10px; text-align: left; width: 800px; }
+#aboutPage .ribbonWrapper .ribbonCount { display: inline-block; width: 350px; padding: 0 10px;  }
+#aboutPage .ribbonWrapper .ribbonCount .count { display: inline-block; }
+#aboutPage .ribbon { 
+	display: inline-block; padding: 10px; color: white; margin: 0 5px; 
+	-moz-border-radius: 6px;  -khtml-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; 
+		box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+}
+#aboutPage .ribbon.red { background-color: #A62525; }
+#aboutPage .ribbon.blue { background-color: #2872A6; }
+#aboutPage .ribbon.white { color: #666666; }
+#aboutPage .ribbon.rainbow { background-color: #25A625; }
+

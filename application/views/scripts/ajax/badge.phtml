@@ -1,0 +1,52 @@
+<style type="text/css">
+#fridge-to-food-badge { 
+    width: 250px; padding: 10px; border: thin solid #c0c0c0; font: 12px "Lucida Grande",Verdana,Arial,sans-serif;
+	-moz-border-radius: 10px;  -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px;
+}
+#fridge-to-food-badge a { color: #2872A6; font: normal 13px Arial,sans-serif; text-decoration: none; }
+
+#fridge-to-food-badge a span, #fridge-to-food-badge a div { font: bold 12px Arial, sans-serif; }
+#fridge-to-food-badge a:link { color: #2872A6; }
+#fridge-to-food-badge a:hover { color: #2872A6; text-decoration: underline; }
+#fridge-to-food-badge a:visited { color: #2872A6; }
+#fridge-to-food-badge a:hover { color: #2872A6; }
+
+#fridge-to-food-badge .ribbonBar { display: inline-block; padding: 0; margin: 0 0 0 25px;  }
+#fridge-to-food-badge .ribbonBar .ribbon { display: inline-block; text-align: center; }
+#fridge-to-food-badge .ribbonBar .text { display: inline-block; }
+#fridge-to-food-badge .ribbonBar .ribbonIcon { 
+	display: inline-block; height: 8px; width: 8px; margin: 0 3px; 
+	-moz-border-radius: 8px;  -khtml-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px;
+	box-shadow: 0px 0px 3px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 3px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.5);
+}
+#fridge-to-food-badge .ribbonBar .ribbonIcon.red { background-color: #A62525; }
+#fridge-to-food-badge .ribbonBar .ribbonIcon.blue { background-color: #2872A6; }
+#fridge-to-food-badge .ribbonBar .ribbonIcon.white {  background-color: white; border: thin solid #C0C0C0; height: 7px; width: 7px; }
+#fridge-to-food-badge .ribbonBar .ribbonIcon.rainbow { background-color: #25A625; }
+
+#fridge-to-food-badge img { 
+    float: left; margin-right: 10px; 
+	-moz-border-radius: 10px;  -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px;
+}
+#fridge-to-food-badge-logo { margin-bottom: 10px; margin-left: 20px; }
+#fridge-to-food-badge-clear { clear: both; }
+
+
+</style>
+<?PHP 
+    $home = Zend_Registry::get('config')->hosts->home;
+    $image = Zend_Registry::get('config')->hosts->image;
+?>
+<div id="fridge-to-food-badge">
+    <?PHP if($this->user->getProfileImage()) { ?>
+        <img src="<?PHP echo $image; ?>/small/<?PHP echo $this->user->getProfileImage()->getImageID(); ?>.jpg" />
+    <?PHP } else { ?>
+        <img src="<?PHP echo $home; ?>/img/fridgeSquareLogoSmall.jpg" />
+    <?PHP } ?>
+    <a href="<?PHP echo $home; ?>" target="_TOP"><img src="<?PHP echo $home; ?>/img/fridgeLogoBadge.png"  id="fridge-to-food-badge-logo" /></a>
+    <a href="<?PHP echo Zend_Registry::get('config')->hosts->home; ?>/profile/<?PHP echo $this->user->getUserID(); ?>" target="_TOP" ><?PHP echo $this->user->getDisplayName(); ?></a> (<?PHP echo $this->user->getReputation(); ?>)
+    <?PHP echo $this->renderUserRibbons($this->user); ?>
+    <div id="fridge-to-food-badge-clear"></div>
+</div>

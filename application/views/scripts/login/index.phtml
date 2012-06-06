@@ -1,0 +1,39 @@
+<?php
+    $helper = new Application_View_Helper_SocialMedia();
+?>
+<div id="loginIndex">
+    <div class="header">
+     	<div class="title">Login</div>
+    </div>
+    <div id="loginForm">
+        <p>Please enter your email and password to login to Fridge to Food. If you don't have an 
+        account yet, and don't want to create one with Facebook or Google, then you can <a href="/user/register">Register</a> to create one.</p>
+        <form method="POST" action="/login/index">
+        <div class="input"><label for="email">Email</label><input type="text" name="email" /></div>
+        <div class="input"><label for="password">Password</label><input type="password" name="password" /></div>
+        <div class="submit"><input type="submit" name="submit" value="Login" /></div> 
+        </form>
+        <div id="errors">
+            <?PHP if(isset($this->errors)) { ?>
+                <?PHP foreach($this->errors as $error) { ?>
+                    <div class="error"><?PHP echo $error; ?></div>
+                <?PHP } ?>
+            <?PHP } ?>
+        </div>
+    </div>
+    <div id="otherLogins">
+        <p>Or login with one of the following:</p>
+        <div id="associationWrapper">
+            <div id="facebook" class="associate"> 
+                <div class="login">
+                    <a href="<?php echo $helper->getFacebookLink(); ?>"><img src="/img/facebookFull.jpg" /></a>
+                </div>    
+            </div>
+            <div id="google" class="associate"> 
+                <div class="login">
+                    <a href="<?php echo $helper->getGoogleLink(); ?>"><img src="/img/googleFull.jpg" /></a>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>

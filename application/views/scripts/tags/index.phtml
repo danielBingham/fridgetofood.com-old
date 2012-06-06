@@ -1,0 +1,16 @@
+<div class="header">
+	<div class="title">Browsing Tags</div>
+	<div class="controls">
+		<a href="/tags">All Tags</a>
+		<a href="/tags/general">General</a>
+		<a href="/tags/cuisine">Cuisine</a>
+		<a href="/tags/course">Course</a>
+		<a href="/tags/allergen">Allergen</a>
+		<a href="/tags/diet">Diet</a>
+	</div>
+</div>
+<div id="tagsIndex">
+	<?php
+		$this->renderItemPager($this->paginator, 'renderTagBox');
+	?>
+</div>

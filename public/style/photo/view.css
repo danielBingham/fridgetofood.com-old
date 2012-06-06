@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+
+#imagesView { text-align: center; width: 1024px; padding: 0; margin: 0 auto; }
+#imagesView h1 {	
+	clear: both; margin: 10px auto; width: 1024px; height: 14px; padding: 10px; color: white; background-color: black; filter: alpha(opacity=80); opacity: 0.80; 
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; font: normal 14px Arial, sans-serif; text-align: left;
+}
+#imagesView img { display: block; clear: both; margin: 10px auto; }
+#imagesView #poster { float: left; clear: left; width: 300px; margin-right: 10px; margin-bottom: 10px; }
+#imagesView #poster .image { 
+	float: left; width: 100px; height: 100px; margin-right: 10px; 
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; 
+}
+#imagesView #poster p { padding: 25px 0; }
+#imagesView #poster a { font-weight: bold; }
+#imagesView #votesWrapper { float: right; margin-right: 10px; width: 50px; height: 70px; }
+#imagesView #votesWrapper #votes { 
+	float: left;  width: 50px; height: 50px; background-color: white; color: #666666; border: thin solid #C0C0C0;
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; 
+}
+#imagesView #votesWrapper #votes .voteTally { padding: 0; margin-top: 2px; text-align: center;  font: bold 24px arial, sans-serif; }
+#imagesView #votesWrapper #votes .voteLabel { padding: 0; text-align: center; font: normal 14px arial, sans-serif; }
+#imagesView #votesWrapper .thumbsUp { display: inline-block; float: left; margin: 6px 2px; width: 20px; height: 20px; background-image: url('/img/thumbsUp.png');}
+#imagesView #votesWrapper a.thumbsUp:hover { background-image: url('/img/thumbsUpHighlight.png');}
+#imagesView #votesWrapper .thumbsUp.highlight { background-image: url('/img/thumbsUpHighlight.png'); }
+#imagesView #votesWrapper .thumbsDown { display: inline-block; float: left; margin: 6px 2px; width: 20px; height: 20px; background-image: url('/img/thumbsDown.png');}
+#imagesView #votesWrapper a.thumbsDown:hover { background-image: url('/img/thumbsDownHighlight.png'); }
+#imagesView #votesWrapper .thumbsDown.highlight { background-image: url('/img/thumbsDownHighlight.png'); }
+
+#imagesView #navLinks { padding: 10px; width: 1000px; }
+#imagesView a.prev { float: left; }
+#imagesView a.next { float: right; }

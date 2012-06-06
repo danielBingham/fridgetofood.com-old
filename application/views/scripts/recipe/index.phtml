@@ -1,0 +1,16 @@
+<div id="indexIndex">
+	<div class="header">
+		<div class="title">
+			Browsing <?php echo $this->paginator->getTotalItemCount(); ?> recipes
+		</div>
+		<div class="controls">
+			<a href="/index/index/order/newest">Newest</a>
+			<a href="/index/index/order/views">Most Views</a>
+			<a href="/index/index/order/votes">Most Votes</a>
+		</div>
+	</div>
+	<?php
+		$this->renderItemPager($this->paginator, 'renderRecipeBox');
+	?>
+
+</div>

@@ -1,0 +1,60 @@
+@CHARSET "UTF-9";
+
+label { display: inline-block; text-align: center; padding: 5px 10px; font-size: 14px; vertical-align: top; }
+input { font-size: 16px; }
+
+#contributeAdd #recipe { width: 1000px; margin: 0 auto; padding-top: 10px; }
+#contributeAdd #recipe label { width: 175px;}
+#contributeAdd #recipe .errors { }
+#contributeAdd #recipe .input { padding: 10px 0; }
+#contributeAdd #recipe .input input { width: 780px; font-size: 16px; }
+#contributeAdd #recipe .submit input { padding: 5px; font-size: 16px; }
+#contributeAdd #recipe .textarea textarea { width: 780px; max-width: 780px; height: 100px;  font-size: 14px; }
+#contributeAdd #recipe .input .help { text-align: center; width: 790px; padding: 5px 5px 5px 205px; font-size: 10px; }
+
+#contributeAdd #ingredients { width: 1000px; margin: 0 auto; }
+#contributeAdd #ingredients p { padding: 1em 0; }
+#contributeAdd #ingredients .ingredientSection { width: 960px; margin: 0 auto; }
+#contributeAdd #ingredients .ingredientSection .columnHeader { display: block; float: left; width: 300px; text-align: center; padding: 5px; }
+#contributeAdd #ingredients .ingredientSection .ingredient .input { float: left; width: 300px; text-align: center; padding: 5px; }
+#contributeAdd #ingredients .ingredientSection .ingredient .input input { width: 290px; }
+#contributeAdd #ingredients .ingredientSection .sectionTitle { width: 900px; }
+#contributeAdd #ingredients .ingredientSection .sectionTitle .input { float: none; width: 890px; padding: 20px 10px; }
+#contributeAdd #ingredients .ingredientSection .sectionTitle .input label { width: 200px; }
+#contributeAdd #ingredients .ingredientSection .sectionTitle .input input { width: 620px; }
+#contributeAdd #ingredients .clonable {display:none;}
+
+#contributeAdd #instructionsHeader { clear: both; padding: 0; width: 1020px; margin: 0 auto; }
+#contributeAdd .instructionSectionHeader { clear: both; padding: 5px 0; width: 920px; margin: 0 auto; }
+
+#contributeAdd #instructions { clear: both; width: 1000px; margin: 0 auto; }
+#contributeAdd #instructions p { padding: 1em 0; }
+#contributeAdd #instructions .instructionSection { clear: both; padding: 10px 0; margin: 5px auto; width: 960px;  }
+#contributeAdd #instructions .instructionSection label { display: inline-block; width: 150px; text-align: center; }
+#contributeAdd #instructions .ingredientSection .sectionTitle { width: 900px; }
+#contributeAdd #instructions .instructionSection .sectionTitle .input { float: none; width: 890px; padding: 20px 10px; }
+#contributeAdd #instructions .instructionSection .sectionTitle .input label { width: 200px; }
+#contributeAdd #instructions .instructionSection .sectionTitle .input input { width: 620px; }
+#contributeAdd #instructions .instruction { clear: both; padding: 10px 0; }
+#contributeAdd #instructions .instruction .number { float: left; clear: left; padding: 40px 20px; }
+#contributeAdd #instructions .instruction textarea { float: left; width: 850px; max-width: 850px; height: 100px; }
+
+#contributeAdd #tags { clear: both; width: 1000px; margin: 0 auto; }
+#contributeAdd #tags p { padding: 1em 0; }
+#contributeAdd #tags .input { width: 1000px; text-align: center; }
+#contributeAdd #tags input { width: 900px; }
+
+#contributeAdd #community { width: 900px; margin: 0 auto; padding: 20px 0; }
+#contributeAdd #community p { padding: 10px 0; }
+#contributeAdd #community .input { text-align: center; }
+#contributeAdd #community label { display: inline-block; width: 150px;  padding: 0 10px; }
+
+#contributeAdd .submit { width: 1000px; text-align: center; margin: 0 auto; }
+#contributeAdd a.delete { 
+    float: right; margin: 12px 0; display: inline-block; height: 16px; width: 16px; 
+    background-image: url('/img/remove_outline.png'); 
+}
+#contributeAdd a.delete:hover { background-image: url('/img/remove.png'); }
+
+.section_clear { clear: both; width: 100%;  }
+.clonable, .hidden { display: none; }

@@ -1,0 +1,268 @@
+<div class="header">
+	<div class="title"><?php echo $this->recipe->getTitle(); ?></div>
+	<div class="controls" >
+    <?php if(Zend_Auth::getInstance()->hasIdentity() 
+            && (Zend_Auth::getInstance()->getIdentity()->getUserID() == $this->recipe->getUserID() || Zend_Auth::getInstance()->getIdentity()->getUserID() == 2)) { ?>
+        <a href="/recipe/edit/id/<?php echo $this->recipe->getRecipeID(); ?>">Edit</a>
+        <a href="/recipe/delete/id/<?php echo $this->recipe->getRecipeID(); ?>">Delete</a> 
+    <?php } ?>
+	</div>
+</div>
+<div id="recipeView" >
+	<div id="intro">
+
+        <!-- {{{ poster -->
+
+		<div id="poster">
+			<?php if($this->recipe->getUser()->getProfileImage()) { ?>
+				<div class="image" 
+                        style="background: url('<?php echo Zend_Registry::get('config')->hosts->image . '/small/' . $this->recipe->getUser()->getImageID() . '.jpg'; ?>');">
+                </div>
+			<?php } else { ?>
+				<div class="image" style="background-color: #EEEEEE;"></div>
+			<?php } ?>
+			<p><?php echo ($this->recipe->isCommunity() ? 'community ' : ''); ?>recipe added <?php echo $this->recipe->getCreated(); ?> by</p>
+			<a href="/user/profile/id/<?php echo $this->recipe->getUser()->getUserID(); ?>"><?php echo $this->recipe->getUser()->getDisplayName(); ?></a>
+			<span class=" cookies">(<?php echo $this->recipe->getUser()->getReputation(); ?>)</span>
+			<?php $this->renderUserRibbons($this->recipe->getUser()); ?>
+	 	</div>
+		<p>
+			<?php 
+				if($this->recipe->getIntro()) {
+					echo str_replace("\n", "<br>", $this->recipe->getIntro()); 
+				}
+				if($this->recipe->getBlogURL() && $this->recipe->getIntro()) { ?>
+					<a href="<?php echo $this->recipe->getBlogURL(); ?>">Read More...</a>
+			<?php } else if($this->recipe->getBlogURL()) { ?>
+					<a href="<?php echo $this->recipe->getBlogURL(); ?>">Read more about this recipe!</a>
+			<?php } ?>
+		</p>
+	</div>
+
+    <!-- }}} -->
+    
+    <div class="clear"></div>
+
+    <!-- {{{ votes -->
+
+	<div id="votesWrapper" >
+		<?php if(!Zend_Auth::getInstance()->hasIdentity()){ ?>
+			<input id="data" type="hidden" name="data" value="false" />
+		<?php } else { ?>
+			<input id="data" type="hidden" name="data" value="<?php echo $this->recipe->getRecipeID(); ?>" />
+		<?php } ?>
+
+        <div id="votes" >
+			<p class=" voteTally"><?php echo $this->recipe->getVoteTotal(); ?></p>
+			<p class=" voteLabel">votes</p>
+		</div>
+		<?php if(Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getIdentity()->getUserID() != $this->recipe->getUserID()){ ?>
+			<a class=" thumbsUp <?php echo (isset($this->vote) && $this->vote == 1 ? 'highlight' : ''); ?>" 
+                href="Javascript:;" 
+                title="Click here to declare your love of this recipe and vote it up!"></a>
+			<a class=" thumbsDown <?php echo (isset($this->vote) && $this->vote == -1 ? 'highlight' : ''); ?>" 
+                href="Javascript:;" 
+                title="Click here to vote this recipe down and tell the world that you don't like it one bit.  Don't forget to comment and tell the chef why you didn't like it."></a>
+		<?php } ?>
+
+	</div>
+
+    <!-- }}} -->
+    <!-- {{{ image -->
+
+	<div id="imageWrapper" >
+		<?php 
+			if($this->recipe->getPrimaryImage()) {
+				$img = Zend_Registry::get('config')->hosts->image . '/medium/' . $this->recipe->getPrimaryImage()->getImageID() . '.jpg';	
+			}
+			else {
+				$img = '/img/no-image.jpg';	
+			}
+		?>
+		<div id="image"  title="Click here to view a gallery of images for this recipe!" style="background-image: url(<?php echo $img; ?>)">
+			<a class="boxLink" href="/gallery/<?php echo $this->recipe->getRecipeID(); ?>"></a>
+		</div>
+		<p >Click the image to view a gallery of images for this recipe!</p>
+	</div>
+
+    <!-- }}} -->
+    <!-- {{{ share -->
+
+	<div id="shareWrapper">
+			<div class="item">
+                <a href="http://twitter.com/share"
+                    class="twitter-share-button" 
+                    data-count="vertical" 
+                    data-via="FridgeToFood" 
+                    data-related="danielBingham:Recipe and update tweets from Fridge to Food.">Tweet</a>
+            </div>
+			<div class="item"><fb:like layout="box_count" width="39"></fb:like></div>
+			<div class="item">
+				<script type="text/javascript">reddit_target='recipes';</script>
+				<script type="text/javascript" src="http://reddit.com/static/button/button2.js"></script>
+			</div> 
+            <div class="item">
+                <div class="g-plusone" data-size="tall"></div>
+            </div>
+	</div>
+
+    <!-- }}} -->
+    <!-- {{{ general -->
+
+	<div id="general" >
+		<p class=" generalField">
+			<span class=" generalFieldLabel">Source</span>
+			<?php 
+				if(!$this->recipe->getSource()) {
+					$website ='';	
+				}
+				else if($this->recipe->getSource() && !$this->recipe->getSourceURL()) {
+					if(strpos($this->recipe->getSource(), 'http://') === false) {
+						$website = $this->recipe->getSource();
+					}
+					else {
+						$website = '<a href="'.$this->recipe->getSource().'">' . $this->recipe->getSource() . '</a>';
+					}
+				}
+				else {
+					if(strpos($this->recipe->getSourceURL(), 'http://') === false) {
+						$website = '<a href="http://' . $this->recipe->getSourceURL() . '">' . $this->recipe->getSource() . '</a>';
+					}
+					else {
+						$website = '<a href="' . $this->recipe->getSourceURL() . '">' . $this->recipe->getSource() . '</a>';
+					}
+				}
+				echo $website;
+			?>
+		</p>
+		<p class=" generalField">
+			<span class=" generalFieldLabel">Preparation Time</span><?php echo $this->recipe->getPreparationTime(); ?>
+		</p>
+		<p class=" generalField">
+			<span class=" generalFieldLabel">Serves</span><?php echo $this->recipe->getServes(); ?>
+		</p>
+	</div>
+
+    <!-- }}} -->    
+    <!-- {{{ ingredients -->
+
+	<div id="ingredients" >
+		<?php foreach($this->recipe->getRecipeSections() as $section) { ?>
+			<?php if($section->getRecipeIngredients()) { ?>
+				<?php if($section->getTitle()) { ?>
+					<h3><?php echo $section->getTitle(); ?></h3>
+				<?php } ?>
+				<table>
+				<tr><th>Amount</th><th>Ingredient</th><th>Preparation</th></tr>
+				<?php 
+					$counter = 0;
+					foreach($section->getRecipeIngredients() as $ingredient) { ?>
+					<tr class=" ingredient <?php echo ($counter % 2 == 0 ?  'highlight' : ''); ?>">
+						<td class="amount"><?php echo $ingredient->getAmount(); ?></td>
+						<td class="name"><?php echo $ingredient->getIngredient()->getName(); ?></td>
+						<td class="preparation"><?php echo $ingredient->getPreparation(); ?></td>
+					</tr>
+				<?php
+					$counter++;
+				 } ?>
+				</table>
+			<?php } ?>
+		<?php } ?>
+	</div>
+
+    <!-- }}} -->
+    <!-- {{{ instructions -->
+
+	<div id="instructions" >
+		<?php foreach($this->recipe->getRecipeSections() as $section) { ?>
+			<?php if($section->getRecipeInstructions()) { ?>
+				<?php if($section->getTitle()) { ?>
+					<h3><?php echo $section->getTitle(); ?></h3>
+				<?php } ?>
+				<?php foreach($section->getRecipeInstructions() as $instruction) { ?>
+					<p class=" instruction"><?php echo $instruction->getNumber().'. '.str_replace("\n", "<br>", $instruction->getContent()); ?></p>
+				<?php } ?>
+			<?php } ?>
+		<?php } ?>
+	</div>
+
+    <!-- }}} -->
+    <!-- {{{ tags -->
+
+	<div class="header"><div class="title">tags</div></div>
+	<div id="tags" >
+		<?php 
+		if($this->recipe->getTags()) {
+			foreach($this->recipe->getTags() as $tag) { ?>
+				<a href="/tags/view/id/<?php echo $tag->getTagID(); ?>" class="tag <?php echo $tag->getType(); ?>"><?php echo $tag->getName(); ?></a>	
+		<?php }
+		} ?>
+	</div>
+
+    <!-- }}} -->
+    <!-- {{{ comments -->
+	
+    <div class="header"><div class="title">comments</div></div>	
+	<div id="comments" >
+		<?php if(!$this->recipe->getRecipeComments() && !Zend_Auth::getInstance()->hasIdentity()) { ?>
+			<div id="noComments" >
+				<p >
+					There are no comments for this recipe yet.  <a  href="/login/index">Login</a> or 
+					<a  href="/user/register">Sign up</a> to be the first to comment!
+				</p>
+			</div>
+		<?php } else {
+				if(!$this->recipe->getRecipeComments()) { ?>
+					<div id="noComments">
+						There are no comments for this recipe yet.  Be the first to comment!
+					</div>
+				<?php } else {
+						foreach($this->recipe->getRecipeComments() as $comment) { ?>
+						<div class="comment" id="<?php echo $comment->getRecipeCommentID(); ?>">
+							<?php if(Zend_Auth::getInstance()->hasIdentity() && $comment->getUserID() == Zend_Auth::getInstance()->getIdentity()->getUserID()) { ?>
+								<div class="controls"><a href="Javascript:;" class="edit">Edit</a> <a href="Javascript:;" class="delete">Delete</a></div>
+							<?php } ?>
+							<?php 
+							if($comment->getUser()->getImageID()) {
+								$img = Zend_Registry::get('config')->hosts->image . '/small/'.$comment->getUser()->getImageID().'.jpg'; ?>
+								<div class=" image" style="background-image: url(<?php echo $img; ?>)"></div>
+							<?php } else { ?>
+								<div class="image" style="background-color: #EEEEEE;"></div>
+							<?php } ?>
+							<div class=" commentWrapper">
+								<?php echo $comment->getCreated(); ?> <a  href="/profile/<?PHP echo $comment->getUser()->getUserID(); ?>"><?php echo $comment->getUser()->getDisplayName(); ?></a>
+								<span class=" cookies">(<?php echo $comment->getUser()->getReputation(); ?>)</span> said...
+								<p class=" commentContent"><?php echo str_replace("\n", "<br>", $comment->getContent()); ?></p>
+							</div>
+						</div>
+						<?php } ?>
+				<?php } ?>
+			<div id="commentForm">
+			<?php 
+				if(Zend_Auth::getInstance()->hasIdentity() === false ) { ?>
+					<p>Please, <a  href="/login/index">Login</a> or <a  href="/user/register">Sign up</a> to leave a comment.</p> 
+				<?php } else { ?>
+                    <div id="form">
+                        <form method="POST" action="/recipe/comment">
+                            <input type="hidden" name="id" value="<?php echo $this->recipe->getRecipeID(); ?>" /> 
+                            <textarea name="comment" id="commentField"></textarea>
+                            <div class="input submit"><input type="submit" name="submit" value="Post Comment" /></div>
+                        </form>
+                    </div>                     
+				<?php }
+			}
+			?>
+			</div>
+	</div>
+
+    <!-- }}} -->
+</div>
+<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>

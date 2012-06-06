@@ -1,0 +1,36 @@
+
+#recipeSubmit { position: relative; }
+#recipeSubmit p { width: 900px; margin: 0 auto; padding: 1em; }
+#recipeSubmit input { font: normal 16px Arial, sans-serif; padding: 0.25em; }
+#recipeSubmit label { font: normal 16px Arial, sans-serif; }
+#recipeSubmit #general { width: 900px; margin: 0 auto; padding: 10px; }
+#recipeSubmit #general label { display: inline-block; width: 200px; padding: 5px 0; }
+#recipeSubmit #general .input { padding: 5px 0; }
+#recipeSubmit #general .input .help { text-align: center; width: 590px; padding: 5px 5px 5px 205px; font-size: 10px; }
+#recipeSubmit #general input { width: 650px; }
+#recipeSubmit #general .textarea label { float: left; clear: left; margin-bottom: 50px; }
+#recipeSubmit #general .textarea textarea { float: left; clear: right; width: 655px; height: 100px; margin-bottom: 10px; }
+#recipeSubmit #ingredients, #recipeSubmit #instructions { width: 900px; margin: 0 auto; padding: 10px; }
+#recipeSubmit #ingredients textarea, #recipeSubmit #instructions textarea { width: 900px; }
+#recipeSubmit #ingredients label, #recipeSubmit #instructions label { display: inline-block; width: 200px; padding: 5px 0; }
+
+
+
+#recipeSubmit .section_clear { clear: both; }
+
+#recipeSubmit #tagsHeader { clear: both; padding: 20px 0; width: 1020px; margin: 0 auto; }
+#recipeSubmit #tagsHeader h2 { 
+     margin: 0 auto; width: 1000px; height: 14px; padding: 10px; color: white; background-color: black; filter: alpha(opacity=80); opacity: 0.80; 
+    -moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; font: normal 14px Arial, sans-serif; 
+}
+#recipeSubmit #tagsHeader h2 a { display: inline-block; margin: 0 10px; float: right; color: white; font: normal 14px Arial, sans-serif; text-decoration: none; }
+#recipeSubmit #tags { width: 900px; margin: 0 auto; }
+#recipeSubmit #tags .input { width: 900px; text-align: center; }
+#recipeSubmit #tags input { width: 880px; }
+
+#recipeSubmit #community { width: 900px; margin: 0 auto; padding: 20px 0; }
+#recipeSubmit #community .input { text-align: center; }
+#recipeSubmit #community label { display: inline-block; width: 150px;  padding: 0 10px; }
+
+#recipeSubmit .submit { text-align: center; padding: 10px; }
+

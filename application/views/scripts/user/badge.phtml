@@ -1,0 +1,23 @@
+<div class="header">
+    <div class="title">User Profile Badge</div>
+</div>
+
+<div id="userBadge">
+    <p>Want to help spread Fridge to Food while showing off your reputation and
+    ribbons?  Get a Fridge to Food user profile badge to display proudly on your
+    blog or website!  Just copy and paste the code below to the place you want to
+    display the badge.</p>
+    <pre>  
+        <?PHP 
+            echo htmlentities('
+<iframe src="' . Zend_Registry::get('config')->hosts->home . '/ajax/badge/id/' . Zend_Auth::getInstance()->getIdentity()->getUserID() . '" style="border: none; padding: 0; margin: 0; width: 300px;">
+    <p>Your browser does not support iframes.</p>
+</iframe>
+                '); ?>
+    </pre>
+    <p>The badge will look like this.</p>
+    <iframe src="<?PHP echo Zend_Registry::get('config')->hosts->home; ?>/ajax/badge/id/<?PHP echo Zend_Auth::getInstance()->getIdentity()->getUserID(); ?>" style="border: none; padding: 0; margin: 0; width: 300px;">
+            <p>Your browser does not support iframes.</p>
+    </iframe>
+</div>
+

@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+
+#userEdit { text-align: center; width: 900px; margin: 10px auto; font-size: 14px; }
+#userEdit .error { text-align: left; padding: 5px 20px 20px 200px; width: 800px; margin: 0px auto; color: red; font-size: 12px; }
+#userEdit h1 { padding: 10px; text-align: center; font-weight: bold; font-size: 24px; }
+#userEdit p { text-align: left; padding: 1em 0;  font-size: 14px; }
+#userEdit label { display: inline-block; text-align: left; width: 180px; padding: 5px 0; font-size: 14px; }
+#userEdit .input { padding: 5px 0; }
+#userEdit .input input { width: 690px; font-size: 16px; padding: 0.25em; }
+#userEdit .textarea label { vertical-align: top; }
+#userEdit .textarea textarea { width: 690px; height: 150px; font-size: 14px; padding: 0.25em; }
+#userEdit .submit input { padding: 5px; font-size: 16px; }
+#userEdit #bloggers label { width: 800px; padding-left: 1em; }

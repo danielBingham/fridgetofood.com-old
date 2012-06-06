@@ -1,0 +1,15 @@
+<div id="photoIndex">
+	<div class="header">
+		<div class="title">
+			Browsing <?php echo $this->paginator->getTotalItemCount(); ?> photos
+		</div>
+		<div class="controls">
+			<a href="/photo/index/order/newest">Newest</a>
+			<a href="/photo/index/order/views">Most Views</a>
+			<a href="/photo/index/order/votes">Most Votes</a>
+		</div>
+	</div>
+	<?php
+		$this->renderItemPager($this->paginator, 'renderImageBox');
+	?>
+</div>

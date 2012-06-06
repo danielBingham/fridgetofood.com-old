@@ -1,0 +1,105 @@
+<div id="recipeSubmit">
+    <div class="header">
+        <div class="title">Submit a Recipe</div>
+        <div class="controls">
+            <a href="/recipe/edit">Full Form</a>
+        </div>
+    </div>
+    <p>Do you have a complex recipe with multiple parts or sections?  Do you want more pin-point control over how your
+    recipe is submitted?  Try using our <a href="/recipe/edit">full edit form</a>.  Fair warning, if you've entered anything
+    in this form, clicking that link will cause it to be lost.</p> 
+    <form method="post" action="/recipe/submit" accept-charset="utf-8">
+        <div id="general">
+            <div class="input text">
+                <label for="recipe[title]">Title</label>
+                <input name="recipe[title]" type="text" maxlength="255" />
+                <div class="help">Give this recipe a title.</div>
+            </div>
+            <div class="input textarea">
+                <label for="recipe[intro]">Intro</label>
+                <textarea name="recipe[intro]" cols="30" rows="6" ></textarea>
+                <div class="help">Introduce us to the recipe.  Is there a story surrounding it?  Anything we need to know going into it?
+                If you're a food blogger sharing a recipe from one of your blog posts, you can use this as a teaser for the post.</div>
+            </div>
+            <div class="input text">
+                <label for="recipe[blog_url]">Post URL</label>
+                <input name="recipe[blog_url]" type="text" value="http://" maxlength="255" />
+                <div class="help">Are you a food blogger sharing a recipe from one of your posts?  Link the post here.  If you give it
+                an introduction above that introduction will become a post teaser with a 'read more' link going to the post.</div>
+            </div>
+            <div class="input text">
+                <label for="recipe[source]">Source</label>
+                <input name="recipe[source]" type="text" maxlength="255" />
+                <div class="help">Are you the source of the recipe?  If not, where'd you find it?  This is the name of the place in which
+                you found it.  If it's from a cookbook, please give us at least book title and author.  If it's from a website or blog,
+                what is the name of the site?</div>
+            </div>
+            <div class="input text">
+                <label for="recipe[source_url]">Source URL</label>
+                <input name="recipe[source_url]" type="text" value="http://" maxlength="255" />
+                <div class="help">If this recipe comes from a blog or website, please link the blog or website.  You can either
+                link the home page or the page where the recipe is featured.</div>
+            </div>
+            <div class="input text">
+                <label for="recipe[preparation_time]">Preparation Time</label>
+                <input name="recipe[preparation_time]" type="text" maxlength="255" />
+                <div class="help">How long does the recipe take to prepare?  You can give us a rough estimate or 
+                a detailed outline, either one works.</div>
+            </div>
+            <div class="input text">
+                <label for="recipe[serves]">Serves or Yields</label>
+                <input name="recipe[serves]" type="text" maxlength="255" />
+                <div class="help">How many servings does this recipe yield?  How many people can the cook expect to feed?</div>
+            </div> 
+        </div>
+        <div class="subheader">
+            <div class="title">Recipe Ingredients</div>
+        </div>
+
+        <div id="ingredients">
+            <p>Please list the ingredients required to prepare this recipe here.  Try to include the amount and any preparation that is
+            required.  The computer will process these when you submit and you will be asked to double check them to make sure it did it
+            correctly.  It's pretty good at it, but it still messes up some times.</p>
+            <div class="input textarea">
+                <textarea name="recipe[ingredients]" rows="15" cols="30" ></textarea>
+            </div>    
+        </div>
+       
+        <div class="subheader">
+            <div class="title">Recipe Instructions</div>
+        </div>
+        <div id="instructions">
+            <p>Please list the steps required to prepare this recipe.  Paragraphs will be broken up into discrete instructions so please,
+            include some paragraphs in logical places.  Walls of text are hard to read.</p>
+            <div class="input textarea">
+                <textarea name="recipe[instructions]" rows="15" cols="30" ></textarea>
+            </div>  
+        </div>
+
+        <div class="subheader">
+            <div class="title">Tags</div>
+        </div>
+        <div id="tags">
+            <p>Enter tags separated by commas to tag your recipe.  Like this: main, Italian-America, gluten-free, nuts. Tags are just 
+            little notes or descriptions that help people find exactly the recipe they are
+            looking for.  Some things to include in the tags are the cuisine the recipe is from (Italian, Chinese, French, etc), the season
+            it most belongs to (if it belongs to one), any allergens it contains (nuts, dairy, gluten, etc), any special diets the requirements
+            of which it satisfies (vegetarian, vegan, gluten-free, etc), what meal it belongs to (breakfast, lunch, dinner, afternoon tea, etc) 
+            and what course it is good for (salad, soup, appetizer, main, etc).</p>
+            <div class="input text">
+                <input name="recipe[tags]" type="text" />
+            </div> 
+        </div>
+        <div id="community">
+            <p>If this is not your recipe, please mark this as a community recipe. If you are not sure whether you 
+            can count this recipe as "yours" then take a look at <a target="_blank" href="/static/faq">the FAQ</a>.</p>
+            <div class="input checkbox">
+                <input type="checkbox" name="recipe[is_community]" value="1" />
+                <label for="recipe[is_community]">Community Recipe</label>
+            </div>    
+        </div>
+        <div class="submit">
+            <input type="submit" value="Submit Your Recipe" />
+        </div>
+    </form>
+</div>

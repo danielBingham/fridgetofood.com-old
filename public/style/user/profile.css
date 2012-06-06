@@ -1,0 +1,46 @@
+@CHARSET "UTF-8";
+
+#usersProfile { width: 1024px; margin: 10px auto;	font: normal 14px arial, sans-serif; }
+
+#usersProfile #image {
+	float: left; width: 300px; height: 300px; margin: 10px;
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; 
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+}
+#usersProfile #image .boxLink { position: absolute; display: block; margin: 0; padding: 0; width: 300px; height: 300px; border: none; z-index: 0; }
+#usersProfile #image.noImage { background-image: url('img/noPerson.png'); background-color: #F8F8F8; }
+#usersProfile #info { float: left; margin: 20px; padding: 10px; width: 300px; }
+#usersProfile #info .label { display: inline-block; float: left; clear: left; width: 100px; margin: 10px; font: bold 14px arial, sans-serif; }
+#usersProfile #info .value { display: inline-block; float: left; clear: right; margin: 10px; }
+#usersProfile #info a { text-decoration: none; font-weight: bold; }
+#usersProfile #info a:hover { text-decoration: underline; }
+#usersProfile #info a:visited:hover { text-dorection: underline; }
+#usersProfile #about { 
+	float: right; margin: 10px; padding: 10px; width: 280px; min-height: 280px; 
+	font: normal 13px arial, sans-serif; background-color: #F8F8F8;
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; 
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+}
+#usersProfile .clear { clear: both; height: 20px; width: 1024px; }
+
+#usersProfile #ribbonsHeader { 	
+	clear: both; margin: 10px auto; width: 900px; height: 14px; padding: 10px; color: white; background-color: black; filter: alpha(opacity=80); opacity: 0.80; 
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; font: normal 14px Arial, sans-serif;
+}
+#usersProfile #ribbons { clear: both; margin: 10px auto;  padding: 10px; width:1024px; }
+#usersProfile #ribbons .ribbon-wrapper { display: inline-block; padding: 10px; width: 225px; text-align: center;  }
+#usersProfile #ribbons .ribbon { 
+	display: inline-block; padding: 10px; color: white; margin: 0 5px; 
+	-moz-border-radius: 6px;  -khtml-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; 
+		box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+}
+#usersProfile #ribbons .ribbon.red { background-color: #A62525; }
+#usersProfile #ribbons .ribbon.blue { background-color: #2872A6; }
+#usersProfile #ribbons .ribbon.white { color: #666666; }
+#usersProfile #ribbons .ribbon.rainbow { background-color: #25A625; }

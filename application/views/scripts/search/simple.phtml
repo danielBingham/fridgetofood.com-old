@@ -1,0 +1,35 @@
+<div id="searchSimple">
+	<div class="header">
+		<div class="title">Simple Search</div>
+		<div class="controls"></div>
+	</div>
+	<p>Search the recipe in Fridge to Food using the recipe's Title, Ingredients, Tags or any combination there of using the form below.
+	For example, if you wanted to search for a quiche that used spinach and goat cheese and was tagged 'gluten-free' you would fill out
+	the search form like so:</p>
+    <table>
+        <tr><td>Title</td><td>quiche</td></tr>
+        <tr><td>Ingredients</td><td>spinach, goat cheese</td></tr>
+        <tr><td>Tags</td><td>gluten-free</td></tr>
+    </table>
+    <form method="GET" action="/search/simple">
+    <div class="input"><label for="t">Title</label><input type="text" name="t" /></div>
+    <div class="input"><label for="i">Ingredients</label><input type="text" name="i" /></div>
+    <div class="input"><label for="tg">Tagged</label><input type="text" name="tg" /></div>
+    <div class="submit"><input type="submit" value="Search" /></p></div>
+    </form>
+</div>
+<?php  if(!empty($this->paginator)) { ?>
+<div class="header">
+    <div class="title">
+        Browsing <?php echo $this->paginator->getTotalItemCount(); ?> recipes
+    </div>
+    <div class="controls">
+        <a href="/search/simple/order/relevance?<?php echo $this->search->getQuery(); ?>">Relevance</a>
+        <a href="/search/simple/order/newest?<?php echo $this->search->getQuery(); ?>">Newest</a>
+        <a href="/search/simple/order/views?<?php echo $this->search->getQuery(); ?>">Most Views</a>
+        <a href="/search/simple/order/votes?<?php echo $this->search->getQuery(); ?>">Most Votes</a>
+    </div>
+</div>
+<?php   $this->renderItemPager($this->paginator, 'renderRecipeBox'); ?>
+<?php } ?>
+

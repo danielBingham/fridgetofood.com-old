@@ -1,0 +1,374 @@
+<?php
+    /**
+    * Check to see whether we have a recipe that we're editing.
+    * If we do, then return the appropriate value string.
+    */
+    function getInputValue($recipe, $field) {
+        $method = 'get' . ucfirst($field);
+        if(isset($recipe) && !empty($recipe)) {
+            return 'value="' . $recipe->$method() . '"';
+        } else {
+            return 'value=""';
+        }   
+    }
+
+    function getTextAreaValue($recipe, $field) {
+        $method = 'get' . ucfirst($field);
+        if(isset($recipe) && !empty($recipe)) {
+            return $recipe->$method();
+        } else {
+            return '';
+        }
+    }
+
+    function areEditting($recipe=null) {
+        return (isset($recipe) && !empty($recipe) ? true : false);
+    }
+
+?>
+<div id="contributeAdd">
+	<div class="header">
+		<div class="title"><?php echo (areEditting($this->recipe) ? 'Edit Recipe' : 'Add a new Recipe'); ?></div>
+        <div class="controls">
+<?php   if(!areEditting($this->recipe)) { ?>
+            <a href="/recipe/submit">Short Form</a>
+<?php   } ?>
+        </div>
+	</div>
+	<form id="addform" method="POST" action="/recipe/edit<?php echo (areEditting($this->recipe) ? '/id/' . $this->recipe->getRecipeID() : ''); ?>">
+
+    <!-- {{{ recipe -->	
+
+    <div id="recipe">
+	            <div class="input text">
+                    <label for="recipe[title]">Title</label>
+                    <input name="recipe[title]" type="text" maxlength="255" <?php echo getInputValue($this->recipe, 'title'); ?>  />
+                    <div class="help">Give this recipe a title.</div>
+                </div>
+                <div class="input textarea">
+                    <label for="recipe[intro]">Intro</label>
+                    <textarea name="recipe[intro]" cols="30" rows="6" ><?php echo getTextAreaValue($this->recipe, 'intro'); ?></textarea>
+                    <div class="help">Introduce us to the recipe.  Is there a story surrounding it?  Anything we need to know going into it?
+                    If you're a food blogger sharing a recipe from one of your blog posts, you can use this as a teaser for the post.</div>
+                </div>
+                <div class="input text">
+                    <label for="recipe[blog_url]">Post URL</label>
+                    <input name="recipe[blog_url]" type="text" maxlength="255" <?php echo getInputValue($this->recipe, 'blogURL'); ?> />
+                    <div class="help">Are you a food blogger sharing a recipe from one of your posts?  Link the post here.  If you give it
+                    an introduction above that introduction will become a post teaser with a 'read more' link going to the post.</div>
+                </div>
+                <div class="input text">
+                    <label for="recipe[source]">Source</label>
+                    <input name="recipe[source]" type="text" maxlength="255" <?php echo getInputValue($this->recipe, 'source'); ?> />
+                    <div class="help">Are you the source of the recipe?  If not, where'd you find it?  This is the name of the place in which
+                    you found it.  If it's from a cookbook, please give us at least book title and author.  If it's from a website or blog,
+                        what is the name of the site?</div>
+                </div>
+                <div class="input text">
+                    <label for="recipe[source_url]">Source URL</label>
+                    <input name="recipe[source_url]" type="text" maxlength="255" <?php echo getInputValue($this->recipe, 'sourceURL'); ?> />
+                    <div class="help">If this recipe comes from a blog or website, please link the blog or website.  You can either
+                    link the home page or the page where the recipe is featured.</div>
+                 </div>
+                <div class="input text">
+                    <label for="recipe[preparation_time]">Preparation Time</label>
+                    <input name="recipe[preparation_time]" type="text" maxlength="255" <?php echo getInputValue($this->recipe, 'preparationTime'); ?> />
+                    <div class="help">How long does the recipe take to prepare?  You can give us a rough estimate or 
+                    a detailed outline, either one works.</div>
+                 </div>
+                <div class="input text">
+                    <label for="recipe[serves]">Serves or Yields</label>
+                    <input name="recipe[serves]" type="text" maxlength="255" <?php echo getInputValue($this->recipe, 'serves'); ?> />
+                    <div class="help">How many servings does this recipe yield?  How many people can the cook expect to feed?</div>
+                 </div> 
+    </div>
+
+    <!-- }}} -->
+    <!-- {{{ ingredients -->
+
+	<div id="ingredientHeader" class="header">
+		<div class="title">Ingredients List</div>
+		<div class="controls"><a href="Javascript:;" class="addIngredientSection">+ add a section</a></div>
+	</div>
+	<div id="ingredients">
+		<p>Enter the ingredients used in your recipe here. The ingredient you enter into the 
+		"Ingredient" column will be indexed by the search engine. So try to keep it as simple 
+		and to the point as possible. Instead of "vegetable or chicken stock" put just "
+		vegetable stock". Instead of "minced garlic" put "garlic". The alternative and preparation 
+		can be entered in the "Preparation and Notes" column.</p>
+<?php 
+    $ingredientSectionCounter = 0; 
+   foreach($this->ingredients as $section) { 
+        if($section == 'Main' || ($section instanceof Application_Model_RecipeSection && $section->isMain())) {
+           $main = true;
+        } else {
+            $main = false;
+        }
+?>       
+        <div id="<?php echo 'ingredientSection_' . $ingredientSectionCounter; ?>" 
+                class="ingredientSection section <?php echo ($main ? 'base' : ''); ?>">
+            <span id="numberOfIngredients_<?php echo $ingredientSectionCounter; ?>" class="hidden"><?php echo (areEditting($this->recipe) ? $section->getIngredientCount() : 1); ?></span>
+            <div class="subheader"> 
+                <div class="title"><?php echo ($main ? 'Main Ingredients' : $section->getTitle()); ?></div> 
+                <div class="controls"> 
+                    <a class="addIngredient" href="javascript:;">+ add an ingredient</a> 
+                    <?php echo ($main ? '' : '<a class="deleteIngredientSection" href="javascript:;">- delete this section</a>'); ?>
+                </div> 
+            </div>
+<?php   if(!$main) {  ?>
+            <div class="sectionTitle"> 
+                <div class="input text">
+                    <label for="recipe[IngredientSection][<?php echo $ingredientSectionCounter; ?>][title]" >Section Title</label>
+                    <input type="text" maxlength="512" name="recipe[IngredientSection][<?php echo $ingredientSectionCounter; ?>][title]" value="<?php echo $section->getTitle(); ?>" >
+                </div>
+            </div>
+<?php   }   ?>
+            <span class="amount columnHeader">Amount</span> 
+            <span class="name columnHeader">Ingredient</span> 
+            <span class="preparation columnHeader">Preparation and Notes</span> 
+<?php
+        if($section instanceof Application_Model_RecipeSection) {
+            $ingredients = $section->getRecipeIngredients();
+        } else {
+            $ingredients = array('first');
+        }
+        $ingredientCounter = 0;
+        foreach($ingredients as $i) {
+?> 
+            <div id="ingredientSection<?php echo $ingredientSectionCounter; ?>ingredient_<?php echo $ingredientCounter; ?>" class="ingredient">
+                <div class="input text">
+                     <input name="recipe[IngredientSection][<?php echo $ingredientSectionCounter; ?>][Ingredient][<?php echo $ingredientCounter; ?>][amount]" 
+                            type="text" 
+                       <?php echo ($i instanceof Application_Model_RecipeIngredient ? 'value="' . $i->getAmount() . '"' : ''); ?> 
+                            maxlength="255" 
+                            class="amount" />
+                </div> 
+                <div class="input text">
+                    <input name="recipe[IngredientSection][<?php echo $ingredientSectionCounter; ?>][Ingredient][<?php echo $ingredientCounter; ?>][Ingredient][name]"
+                            type="text" 
+                       <?php echo ($i instanceof Application_Model_RecipeIngredient ? 'value="' . $i->getIngredient()->getName() . '"' : ''); ?> 
+                            maxlength="255"
+                            class="name" />
+                        
+                </div>
+                <div class="input text">
+                    <input name="recipe[IngredientSection][<?php echo $ingredientSectionCounter; ?>][Ingredient][<?php echo $ingredientCounter; ?>][preparation]" 
+                           type="text" 
+                       <?php echo ($i instanceof Application_Model_RecipeIngredient ? 'value="' . $i->getPreparation() . '"' : ''); ?> 
+                           maxlength="255" 
+                           class="preparation" />
+                </div>
+                <a href="javascript:;" class="delete"></a>
+            </div>
+    <?php $ingredientCounter++; ?>
+    <?php } ?>
+            <div class="section_clear"></div>
+        </div>
+<?php $ingredientSectionCounter++; ?>
+<?php } ?>
+   </div>
+
+    <!-- }}} -->
+    <!-- {{{ instructions -->
+
+	<div id="instructionHeader" class="header">
+		<div class="title">Instructions List</div>
+		<div class="controls"><a href="Javascript:;" class="addInstructionSection">+ add a section</a></div>
+	</div>
+	<div id="instructions">
+		<p>Enter the directions for your recipe here. You should try to split the directions into steps. 
+		Each step should be one whole action or process. Try to make it so that the cook can read and 
+		complete one step at a time while preparing the recipe.</p>
+<?php
+    $instructionSectionCounter = 0;
+    foreach($this->instructions as $section) {
+        if($section == 'Main' || ($section instanceof Application_Model_RecipeSection && $section->isMain())) {
+            $main = true;
+        } else {
+            $main = false;
+        }
+?>
+        <div id="instructionSection_<?php echo $instructionSectionCounter; ?>" class="instructionSection section <?php echo ($main ? 'base' : ''); ?>">
+            <span id="numberOfInstructions_<?php echo $instructionSectionCounter; ?>" class="hidden">
+                <?php echo (areEditting($this->recipe) ? $section->getInstructionCount() : 1); ?>
+            </span>
+            <div class="subheader">
+                <div class="title"><?php echo ($main ? 'Main Instructions' : $section->getTitle()); ?></div>
+                <div class="controls">
+                    <a class="addInstruction" href="javascript:;">+ add an instruction</a>
+                    <?php if(!$main) { ?>
+                        <a class="deleteInstructionSection" href="javascript:;">- delete this section</a>
+                    <?php } ?>
+                </div>
+            </div>
+<?php   if(!$main) { ?> 
+            <div class="sectionTitle">
+                <div class="input text">
+                    <label for="recipe[InstructionSection][<?php echo $instructionSectionCounter; ?>][title]">Section Title</label>
+                    <input type="text" maxlength="512" name="recipe[InstructionSection][<?php echo $instructionSectionCounter; ?>][title]" value="<?php echo $section->getTitle(); ?>" />
+                </div>
+            </div>
+<?php 
+        }
+        if($section instanceof Application_Model_RecipeSection) {
+            $instructions = $section->getRecipeInstructions();
+        } else {
+            $instructions = array('first');
+        }
+        $instructionCounter = 0;
+        foreach($instructions as $i) {
+?>
+            <div id="<?php echo 'instructionSection' . $instructionSectionCounter . 'instruction_' . $instructionCounter; ?>" class="instruction">
+                <input class="numberValue" 
+                        type="hidden" 
+                        value="<?php echo $instructionCounter+1; ?>" 
+                        name="recipe[InstructionSection][<?php echo $instructionSectionCounter; ?>][Instruction][<?php echo $instructionCounter; ?>][number]" />
+                <span class="number"><?php echo (areEditting($this->recipe) ? $i->getNumber() : '1'); ?>.</span>
+                <div class="input textarea">
+                    <textarea name="recipe[InstructionSection][<?php echo $instructionSectionCounter; ?>][Instruction][<?php echo $instructionCounter; ?>][content]"><?php echo (areEditting($this->recipe) ? $i->getContent() : ''); ?></textarea>
+                </div>
+                <a class="delete" href="javascript:;"></a>
+            </div>
+            <?php $instructionCounter++; ?>
+        <?php } ?>
+            <div class="section_clear"></div>
+        </div>
+<?php $instructionSectionCounter++; ?>
+<?php } ?>
+    </div>
+
+    <!-- }}} -->
+    <!-- {{{ tags -->
+
+	<div id="tagHeader" class="header">
+		<div class="title">Tags</div>
+		<div class="controls"></div>
+	</div>
+	<div id="tags">
+		<p>Tag your recipe here. Recipes should be tagged with their cuisine (Italian, Thai), course 
+		and/or meal (Main, salad, dinner, breakfast), diet (gluten-free, vegetarian), and any allergens (gluten, 
+		dairy, nuts). Also, feel free to add any other tags you can think of.</p>
+       <div class="input text">
+            <input name="recipe[tags]" type="text" id="RecipeTagName" value="<?php echo (isset($this->tags) ? $this->tags : ''); ?>" />
+        </div> 	
+    </div>
+
+    <!-- }}} -->
+    <!-- {{{ community -->
+
+	<div id="community">
+		<p>If this is not your recipe, please mark this as a community recipe.  Please, also list the original source of the recipe 
+		using the "Source" and "Source URL" fields.  If you are not sure whether you can count this recipe as "yours" then take a 
+		look at <a href="/static/faq">the FAQ</a>.</p>
+    	<div class="input checkbox">
+            <input type="checkbox"
+                    name="recipe[is_community]" 
+                    value="1"
+                    <?php echo (areEditting($this->recipe) && $this->recipe->isCommunity() ? 'checked="checked"' : ''); ?> 
+                    id="RecipeIsCommunity" />
+            <label for="recipe[is_community]">Community Recipe</label>
+        </div>    
+    </div>
+
+    <!-- }}} -->
+
+	<div class="submit">
+    	<input type="submit" value="<?php echo (areEditting($this->recipe) ? 'Edit Recipe' : 'Add Recipe'); ?>" />
+    </div>
+	</form>
+</div>
+
+<span id="numberOfIngredientSections" class="hidden"><?php echo $ingredientSectionCounter; ?></span>
+<span id="numberOfInstructionSections" class="hidden"><?php echo $instructionSectionCounter; ?></span>
+
+<!-- {{{ ingredientSectionClonable -->
+
+<!--Wrapper for ingredient section, to be cloned by JS when a new section
+    is needed. -->
+<div id="ingredientSectionClonable" class="ingredientSection clonable section">
+    <div class="subheader"> 
+        <div class="title">&nbsp; </div> 
+        <div class="controls"> 
+            <a class="addIngredient" href="javascript:;">+ add an ingredient</a>
+            <a class="deleteIngredientSection" href="javascript:;">- delete this section</a>
+        </div> 
+    </div>
+    <div class="sectionTitle"> 
+        <div class="input text">
+            <label for="recipe[IngredientSection][S#][title]" >Section Title</label>
+            <input type="text" maxlength="512" name="recipe[IngredientSection][S#][title]">
+        </div>
+    </div>
+    <span class="amount columnHeader">Amount</span> 
+    <span class="name columnHeader">Ingredient</span> 
+    <span class="preparation columnHeader">Preparation and Notes</span> 
+    <div class="section_clear"></div>
+</div>
+
+<!-- }}} -->
+<!-- {{{ ingredientClonable -->
+
+<!-- Single ingredient to be cloned by JS when a new ingredient is
+    needed. -->
+<div id="ingredientClonable" class="ingredient clonable">
+    <div class="input text">
+        <input name="recipe[IngredientSection][S#][Ingredient][I#][amount]" 
+                type="text" 
+                maxlength="255" 
+                class="amount" />
+    </div> 
+    <div class="input text">
+        <input name="recipe[IngredientSection][S#][Ingredient][I#][Ingredient][name]"
+                type="text" 
+                maxlength="255"
+                class="name" />
+    </div>
+    <div class="input text">
+        <input name="recipe[IngredientSection][S#][Ingredient][I#][preparation]" 
+                type="text" 
+                maxlength="255" 
+                class="preparation" />
+    </div>
+    <a href="javascript:;" class="delete"></a>
+</div>
+
+<!-- }}} -->
+<!-- {{{ instructionSectionClonable -->
+
+<!-- Wrapper for instruction section, to be cloned by JS when a new section is
+     needed.  This section will be hidden by CSS. -->
+<div id="instructionSectionClonable" class="instructionSection clonable section">
+    <div class="subheader">
+        <div class="title"></div>
+        <div class="controls">
+            <a class="addInstruction" href="javascript:;">+ add an instruction</a>
+            <a class="deleteInstructionSection" href="javascript:;">- delete this section</a>
+        </div>
+    </div>
+    <div class="sectionTitle">
+        <div class="input text">
+            <label for="recipe[InstructionSection][S#][title]">Section Title</label>
+            <input type="text" maxlength="512" name="recipe[InstructionSection][S#][title]">
+        </div>
+    </div>
+    <div class="section_clear"></div>
+</div>
+
+<!-- }}} -->
+<!-- {{{ instructionClonable -->
+
+<!-- Single instruction to be cloned by JS when a new instruction is
+     needed.  This instruction will be hidden by CSS. -->
+<div id="instructionClonable" class="instruction clonable">
+    <input class="numberValue" 
+            type="hidden" 
+            value="N#" 
+            name="recipe[InstructionSection][S#][Instruction][I#][number]" />
+    <span class="number">N#.</span>
+    <div class="input textarea">
+        <textarea name="recipe[InstructionSection][S#][Instruction][I#][content]"></textarea>
+    </div>
+    <a class="delete" href="javascript:;"></a>
+</div>
+
+<!-- }}} -->

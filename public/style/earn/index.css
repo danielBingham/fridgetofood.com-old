@@ -1,0 +1,5 @@
+@CHARSET "UTF-8";
+
+#earnIndex { width: 1024px; margin: 25px auto; font: normal 14px Verdana,Arial,sans-serif; color: #333333;  }
+#earnIndex p { margin: 10px auto; width: 1000px; }
+#earnIndex code { display: block; width: 800px; margin: 10px auto; padding: 20px 10px; }

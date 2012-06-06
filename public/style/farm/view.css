@@ -1,0 +1,75 @@
+@CHARSET "UTF-8";
+
+#farmView { 
+	margin: 0 auto; padding: 10px; width: 1000px; min-height: 600px;
+}
+#farmView a { font-weight: bold; color: #2872A6; text-decoration: none; }
+#farmView a:hover { font-weight: bold; text-decoration: underline; }
+#farmView .clear { width: 1000px; clear: both; height: 10px; }
+
+#farmView #intro p { padding: .5em 0; }
+
+#farmView #general { margin: 0 0 0 100px; }
+#farmView #general .generalField { padding: .25em 0; }
+#farmView #general .generalFieldLabel { display: inline-block; font-weight: bold; width: 150px; color: #444444; }
+
+
+#farmView #imageWrapper { float: right; margin-left: 10px; margin-bottom: 15px; width: 300px; height: 350px; }
+#farmView #imageWrapper #image { 
+	 width: 300px; height: 300px; z-index: 2;
+	background: url('/img/no-image.jpg') no-repeat center;
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; 
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+}
+#farmView #imageWrapper #image a:link { display: inline-block; margin: 0; padding: 0; width: 300px; height: 300px; border: none; }
+#farmView #imageWrapper #image a:visited { display: inline-block; margin: 0; padding: 0; width: 300px; height: 300px; border: none; }
+#farmView #imageWrapper p { clear: both; margin-top: 10px; }
+#farmView #shareWrapper { float: left;  clear: left; margin-top: 15px; width: 50px; margin-right: 10px; }
+#farmView #shareWrapper .item { padding: 10px 0; }
+
+#farmView #products { margin: 30px 0 0 100px; }
+#farmView #products h3 { text-align: left; width: 480px; padding: 10px 0; font: italic 16px Arial, sans-serif; }
+#farmView #products table { width: 550px; }
+#farmView #products .ingredient.highlight { background-color: #E0E0E0; }
+#farmView #products .ingredient .availability { width: 130px; }
+#farmView #products .ingredient .product { width: 250px; }
+#farmView #products .ingredient .priceRange { width: 130px; } 
+#farmView #products th { padding: 5px 0; }
+#farmView #products td { padding: 5px 5px; text-align: center; }
+
+#farmView #tagsHeader { 	
+	clear: both; margin: 10px auto; width: 900px; height: 14px; padding: 10px; color: white; background-color: black; filter: alpha(opacity=80); opacity: 0.80; 
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; font: normal 14px Arial, sans-serif;
+}
+#farmView #tags { clear: both; margin: 10px auto; padding: 0 0 20px 0;  width:880px; }
+#farmView #tags a { color: white; text-decoration: none; }
+#farmView #tags a.tag.general { background-color: white; color: #666666; border: thin solid #C0C0C0; }
+#farmView #tags a.tag.general:hover { background-color: #DEDEDE; color: #666666; border: thin solid #C0C0C06; }
+
+#farmView #comments {
+		clear: both; margin: 10px auto; padding: 0 20px 20px 0; width: 920px; border-left: thin solid white; border-right: thin solid white;
+}
+#farmView #comments #noComments { clear: both; min-height: 60px; padding: 10px 0; text-align: center; margin-bottom: 20px; }
+#farmView #comments h3 {  
+	margin: 0px auto; width: 900px; height: 14px; padding: 10px; color: white; background-color: black; filter: alpha(opacity=80); opacity: 0.80; 
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; font: normal 14px Arial, sans-serif;
+ }
+#farmView #comments .comment { 
+	display: block; clear: both; margin: 20px auto; width: 900px; padding: 5px; min-height: 100px; background-color: #F0F0F0;  
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; 
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+}
+#farmView #comments .commentContent { margin: 10px; width: 850px; }
+#farmView #comments .commentWrapper {  margin: 10px; min-height: 100px; width:700px; }
+#farmView #comments .image { 
+	float: left; width: 100px; height: 100px; margin: 10px; 
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; 
+}
+#farmView #comments .comment .controls { float: right; padding: 5px; }
+#farmView #comments .comment .controls a { display: inline-block; padding: 0 5px; font-weight: normal; color: #444444; }
+#farmView #comments .comment .controls a:hover { border-bottom: thin dotted #444444; text-decoration: none; }
+#farmView #comments .comment textarea { width: 700px; height: 200px } 

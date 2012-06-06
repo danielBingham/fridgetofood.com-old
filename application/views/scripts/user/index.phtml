@@ -1,0 +1,14 @@
+<div class="header">
+	<div class="title">
+		Browsing <?php echo $this->paginator->getTotalItemCount(); ?> users
+	</div>
+	<div class="controls">
+		<a href="<?php echo $this->url(array('controller'=>'user', 'action'=>'index', 'order'=>'reputation'), NULL, false); ?>">Reputation</a>
+		<a href="<?php echo $this->url(array('controller'=>'user', 'action'=>'index', 'order'=>'recipes'), NULL, false); ?>">Most Recipes</a>
+		<a href="<?php echo $this->url(array('controller'=>'user', 'action'=>'index', 'order'=>'active'), NULL, false); ?>">Recently Active</a>
+		<a href="<?php echo $this->url(array('controller'=>'user', 'action'=>'index', 'order'=>'newest'), NULL, false); ?>">Newest</a>
+	</div>
+</div>
+<?php
+	$this->renderItemPager($this->paginator, 'renderUserBox');
+?>

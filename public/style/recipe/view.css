@@ -1,0 +1,103 @@
+@CHARSET "UTF-8";
+
+#recipeView { 
+	margin: 0 auto; padding: 10px; width: 1000px; min-height: 600px;
+}
+#recipeView a { font-weight: bold; color: #2872A6; text-decoration: none; }
+#recipeView a:hover { font-weight: bold; text-decoration: underline; }
+#recipeView .clear { width: 1000px; clear: both; height: 10px; }
+
+#recipeView #intro p { padding: .5em 0; }
+#recipeView #intro #poster { float: left; clear: left; width: 350px; margin-right: 10px; margin-bottom: 10px; }
+#recipeView #intro #poster .image { 
+	float: left; width: 100px; height: 100px; margin-right: 10px; 
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; 
+}
+#recipeView #intro #poster p { padding: 10px 0; }
+
+#recipeView #votesWrapper { float: left; margin-right: 10px; width: 50px; height: 70px; }
+#recipeView #votesWrapper #votes { 
+	float: left;  width: 50px; height: 50px; background-color: white; color: #666666; border: thin solid #C0C0C0;
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; 
+}
+#recipeView #votesWrapper #votes .voteTally { padding: 0; margin-top: 2px; text-align: center;  font: bold 24px arial, sans-serif; }
+#recipeView #votesWrapper #votes .voteLabel { padding: 0; text-align: center; font: normal 14px arial, sans-serif; }
+#recipeView #votesWrapper .thumbsUp { display: inline-block; float: left; margin: 4px 2px; width: 20px; height: 20px; background-image: url('/img/thumbsUp.png');}
+#recipeView #votesWrapper a.thumbsUp:hover { background-image: url('/img/thumbsUpHighlight.png');}
+#recipeView #votesWrapper .thumbsUp.highlight { background-image: url('/img/thumbsUpHighlight.png'); }
+#recipeView #votesWrapper .thumbsDown { display: inline-block; float: left; margin: 4px 2px; width: 20px; height: 20px; background-image: url('/img/thumbsDown.png');}
+#recipeView #votesWrapper a.thumbsDown:hover { background-image: url('/img/thumbsDownHighlight.png'); }
+#recipeView #votesWrapper .thumbsDown.highlight { background-image: url('/img/thumbsDownHighlight.png'); }
+
+#recipeView #general { margin: 0 0 0 100px; }
+#recipeView #general .generalFieldLabel { display: inline-block; font-weight: bold; width: 150px; color: #444444; }
+
+#recipeView #imageWrapper { float: right; margin-left: 10px; margin-bottom: 15px; width: 300px; height: 350px; }
+#recipeView #imageWrapper #image { 
+	 width: 300px; height: 300px; z-index: 2;
+	background: url('/img/no-image.jpg') no-repeat center;
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; 
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+}
+#recipeView #imageWrapper #image a:link { display: inline-block; margin: 0; padding: 0; width: 300px; height: 300px; border: none; }
+#recipeView #imageWrapper #image a:visited { display: inline-block; margin: 0; padding: 0; width: 300px; height: 300px; border: none; }
+#recipeView #imageWrapper p { clear: both; margin-top: 10px; }
+#recipeView #shareWrapper { float: left;  clear: left; margin-top: 15px; width: 50px; margin-right: 10px; }
+#recipeView #shareWrapper .item { padding: 10px 0; }
+
+#recipeView #ingredients { margin: 30px 0 0 100px; }
+#recipeView #ingredients h3 { text-align: left; width: 480px; padding: 10px 0; font: italic 16px Arial, sans-serif; }
+#recipeView #ingredients table { width: 550px; }
+#recipeView #ingredients .ingredient.highlight { background-color: #E0E0E0; }
+#recipeView #ingredients .ingredient .amount { width: 130px; }
+#recipeView #ingredients .ingredient .name { width: 250px; }
+#recipeView #ingredients .ingredient .preparation { width: 130px; } 
+#recipeView #ingredients th { padding: 5px 0; }
+#recipeView #ingredients td { padding: 5px 5px; text-align: center; }
+
+
+#recipeView #instructions { margin: 20px auto; width: 900px; }
+#recipeView #instructions .instruction { margin: 20px 0; }
+#recipeView #instructions h3 { text-align: left; padding: 10px 0; font: italic 16px Arial, sans-serif; }
+
+#recipeView #tagsHeader { 	
+	clear: both; margin: 10px auto; width: 900px; height: 14px; padding: 10px; color: white; background-color: black; filter: alpha(opacity=80); opacity: 0.80; 
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; font: normal 14px Arial, sans-serif;
+}
+#recipeView #tags { clear: both; margin: 10px auto; padding: 0 0 20px 0;  width:880px; }
+#recipeView #tags a { color: white; text-decoration: none; }
+#recipeView #tags a.tag.general { background-color: white; color: #666666; border: thin solid #C0C0C0; }
+#recipeView #tags a.tag.general:hover { background-color: #DEDEDE; color: #666666; border: thin solid #C0C0C06; }
+
+#recipeView #comments {
+		clear: both; margin: 10px auto; padding: 0 20px 20px 0; width: 920px; border-left: thin solid white; border-right: thin solid white;
+}
+#recipeView #comments #noComments { clear: both; min-height: 60px; padding: 10px 0; text-align: center; margin-bottom: 20px; }
+#recipeView #comments h3 {  
+	margin: 0px auto; width: 900px; height: 14px; padding: 10px; color: white; background-color: black; filter: alpha(opacity=80); opacity: 0.80; 
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; font: normal 14px Arial, sans-serif;
+ }
+#recipeView #comments .comment { 
+	display: block; clear: both; margin: 20px auto; width: 900px; padding: 5px; min-height: 100px; background-color: #F0F0F0;  
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; 
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+}
+#recipeView #comments .commentContent { margin: 10px; width: 850px; }
+#recipeView #comments .commentWrapper {  margin: 10px; min-height: 100px; width:700px; }
+#recipeView #comments .image { 
+	float: left; width: 100px; height: 100px; margin: 10px; 
+	-moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; 
+}
+#recipeView #comments .comment .controls { float: right; padding: 5px; }
+#recipeView #comments .comment .controls a { display: inline-block; padding: 0 5px; font-weight: normal; color: #444444; }
+#recipeView #comments .comment .controls a:hover { border-bottom: thin dotted #444444; text-decoration: none; }
+#recipeView #comments .comment textarea { width: 700px; height: 200px } 
+
+#recipeView #comments #form { margin: 20px auto 50px auto; padding: 5px; border: none;  width: 610px; text-align: center; }
+#recipeView #comments #form textarea { width: 600px; height: 200px; }
+#recipeView #comments #form .submit input { margin: 10px auto; padding: 5px; font: normal 16px arial, sans-serif; }
+

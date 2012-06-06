@@ -1,0 +1,22 @@
+<div id="userRegister">
+    <form method="POST" action="/user/register">
+        <div class="input"><label for="email">Email Address</label><input type="text" name="email" /></div>
+        <div class="input"><label for="display_name">Display Name</label><input type="text" name="display_name" /></div>
+        <div class="input"><label for="password">Password</label><input type="password" name="password" /></div>
+        <div class="input"><label for="confirm">Confirm Password</label><input type="password" name="confirm" /></div>
+        <p>In order to keep bots from registering, we need to ask you a simple question.  If you don't know the answer,
+        you can find it <a href="http://en.wikipedia.org/wiki/Obama">here</a>.</p>
+        <div id="humanity" class="input">
+            <label for="humanity">What is the <strong>last name</strong> of the current US president?</label>
+            <input type="text" name="humanity" />
+        </div>
+        <div class="submit"><input type="submit" value="Register" /></div>
+        <?PHP if(isset($this->errors)) { ?>
+            <div id="errors">
+                <?PHP foreach($this->errors as $error) { ?>
+                    <div class="error"><?PHP echo $error; ?></div>
+                <?PHP } ?>
+            </div>
+        <?PHP } ?>
+    </form>
+</div>

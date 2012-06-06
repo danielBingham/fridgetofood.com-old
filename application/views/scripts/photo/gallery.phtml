@@ -1,0 +1,31 @@
+<div class="header" >
+	<div class="title"><?php echo $this->recipe->getTitle(); ?></div>
+	<div class="controls">
+        <a href="/photo/add/recipe/<?php echo $this->recipe->getRecipeID(); ?>">Add a Photo</a>
+		<a  href="<?PHP echo $this->url(array('id'=>$this->recipe->getRecipeID(), 'url_title'=>$this->recipe->getURLTitle()), 'recipe'); ?>">Return to the recipe</a>
+	</div>
+</div>
+<div id="imagesGallery" >	
+	<div id="browseImageContainer" >
+	<?php
+	if(!empty($this->paginator)) { 
+		foreach($this->paginator as $image) { ?>
+		<div id="<?php echo $image->getImageID(); ?>" class=" imageWrapper">
+			<div class=" image" style="background-image: url(<?PHP echo Zend_Registry::get('config')->hosts->image; ?>/medium/<?php echo $image->getImageID(); ?>.jpg)">
+				<a href="/photograph/<?php echo $image->getImageID(); ?>" class="boxLink"></a>
+			</div>
+			<span class=" poster">added by 
+				<a  href="/user/profile/id/<?php echo $image->getUser()->getUserID(); ?>"><?php echo $image->getUser()->getDisplayName(); ?></a>
+				<span class=" cookies">(<?php echo $image->getUser()->getReputation(); ?>)</span>
+			</span>
+			<span class=" votes"><?php echo $image->getVotes(); ?></span>
+		</div>
+	<?php } 
+			$this->paginationControl($this->paginator,'Sliding', 'pagination_controls.phtml');
+		}
+		else { ?>
+			<div id="noImages">There have been no photographs added for this recipe yet.  Cook it and <a href="<?php echo $this->Html->url(array('controller'=>'images', 'action'=>'add', $recipe['Recipe']['id'])); ?>">add one</a>.</div>
+		<?php } ?>
+		<div class="clear"></div>
+	</div>
+</div>

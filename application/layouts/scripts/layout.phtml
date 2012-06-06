@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+    <?PHP if(!isset($this->title)) { ?>
+        <title>Fridge to Food</title>
+    <?PHP } else { ?>
+        <title><?PHP echo $this->title; ?> - Fridge To Food</title>
+    <?PHP } ?>
+	<link rel="stylesheet" type="text/css" href="/style/fridge.css" />
+    <link rel="stylesheet" type="text/css" href="/style/jquery.Jcrop.css" />
+	<?php
+		$controller = Zend_Controller_Front::getInstance()->getRequest()->getControllerName();
+		$action = Zend_Controller_Front::getInstance()->getRequest()->getActionName();
+	?>
+	<link rel="stylesheet" type="text/css" href="/style/<?php echo $controller; ?>/<?php echo $action; ?>.css" />
+
+    <?PHP if(isset($this->canonicalImage)) { ?>
+       <link rel="image_src" href="<?PHP echo Zend_Registry::get('config')->hosts->image . $this->canonicalImage; ?>" /> 
+    <?PHP } else { ?>
+        <link rel="image_src" href="<?PHP echo Zend_Registry::get('config')->hosts->home; ?>/img/no-image.jpg" />
+    <?PHP } ?>
+
+    <meta name="google-site-verification" content="BOBJrnrp3rXSx08DSvxSuqSmXWLuB67XNtAn0ZiCHTA" />
+	
+	<script type="text/javascript" src="/js/jquery-1.6.1.js"></script>
+    <script type="text/javascript" src="/js/jquery.Jcrop.js"></script>
+	<script type="text/javascript" src="/js/main.js"></script>
+	<script type="text/javascript" src="/js/<?php echo $controller; ?>/<?php echo $action; ?>.js"></script>
+		
+	
+	<link rel="shortcut icon" href="/fridge.ico" type="image/x-icon" />
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12550834-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<div id="header">
+    <div id="logo"><a href="/"><img src="/img/LogoSmall.jpg" /></a></div>
+	<div id="navigation">
+    <div id="browse" class="menu-parent">
+        <div class="open-menu"><a href="" class="open-button">Browse <img src="/img/arrow_down.png" /></a></div>
+        <div class="close-menu"><a href="" class="close-button">Browse <img src="/img/arrow_up.png" /></a></div>
+        <div class="menu">
+            <p><a href="/recipe">recipes</a></p>
+            <p><a href="/photo">photos</a></p>
+            <p><a href="/tags">tags</a></p>
+            <p><a href="/user">foodies</a></p>
+        </div>
+    </div>
+		<a id="search" href="/search/simple">Search</a>
+		<a id="contribute" href="/recipe/submit">Submit</a>
+	</div>
+	<div id="userControls">
+		<?php 
+			echo $this->renderUserControls();
+		?>
+		<a href="/static/about">About</a>
+		<a href="http://www.theroadgoeson.com/?cat=143">Blog</a>
+		<a href="/static/faq">FAQ</a>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="main">
+<?php echo $this->layout()->content; ?>
+</div>
+<div id="footer" >
+	<div id="linksetWrapper">
+		<div id="opensource" class="linkset">
+			<h2>Acknowledgements</h2>
+			Fridge to Food is built on the following open source projects: 
+			<a href="http://framework.zend.com">Zend Framework</a>,
+			<a href="http://www.jquery.org">Jquery</a>,
+			<a href="">JCrop</a>,
+			<a href="">Uploadify</a>,
+			<a href="">MySQL</a>,
+			<a href="">Ubuntu Linux</a>.  With out the hard work of everyone
+			who contributed to these projects, Fridge to Food would not have
+			been possible.  So thank you!
+		</div>
+		<div id="aboutUs" class="linkset">
+			<h2>About Us</h2>
+			<a  href="/about">About Fridge to Food</a><br /> 
+			<a  href="http://www.theroadgoeson.com/?cat=143">Blog</a><br />
+			<a  href="/faq">Frequently Asked Questions</a><br />
+			<a  href="/tos">Terms of Service</a><br /> 
+			<a  href="/privacy">Privacy Policy</a><br />
+		</div>
+		<div id="contact" class="linkset">
+			<h2>Contact Us</h2>
+            Daniel Bingham<br />
+            dbingham@theroadgoeson.com<br />
+			<a href="mailto:dbingham@theroadgoeson.com">Send an E-mail</a>
+		</div>
+
+		<div id="followus" class="linkset">
+			<h2>Follow Us</h2>
+			<a href="http://www.twitter.com/danielBingham"><img src="/img/twitter_16.png" /></a>
+			<a href="http://www.facebook.com/#!/pages/Fridge-to-Food/172214969974"><img src="/img/facebook_16.png" /></a>
+            <a href="https://plus.google.com/110223420358739469670/"><img src="/img/googlePlus_16.png" /></a>
+		</div>
+		<div id="version" class="linkset">
+			Fridge to Food copyright 2010, current version is <?php echo Zend_Registry::get('config')->version; ?>, 
+            last updated on <?php echo Zend_Registry::get('config')->updated; ?>.
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+</body>
+</html>
+
+
