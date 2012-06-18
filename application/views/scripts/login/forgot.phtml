@@ -1,0 +1,24 @@
+<div class="header">
+    <div class="title">Forgot your password?</div>
+</div>
+<div id="login-forgot">
+    <?PHP if($this->state == 'NOTSENT' ) { ?>
+        <p>If you forgot your password, just enter the e-mail that you log in with and we'll generate a new
+        temporary password and e-mail it to you.</p>
+        <form method="POST" action="/login/forgot">
+        <input type="text" name="email" />
+        <?PHP if($this->error == 'NOUSER') { ?>
+            <p class="error">There is no user registered for that e-mail.  Sure that's the right one?</p>
+        <?PHP } ?>
+        <input type="submit" value="Reset Password" />
+        </form>
+    <?PHP } else if($this->state == 'SENT') { ?>
+        <p>An e-mail has been sent to the address, <?PHP echo $this->email; ?>, with your new temporary password.</p>
+        <p>Please check your e-mail, then login and change your password.</p>
+    <?PHP 
+        } else {
+            throw new RuntimeException('Login-ForgotPassword is in an invalid state!  Please report this as a bug.');
+        }
+    ?>
+            
+</div>

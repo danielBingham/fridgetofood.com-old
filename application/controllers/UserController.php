@@ -122,6 +122,8 @@ class UserController extends Zend_Controller_Action {
         $ribbonHandler = new Application_Service_Ribbon_Handler();
         $ribbonHandler->checkAndGrant($user, 'autobiographer');		
 
+        Zend_Auth::getInstance()->getStorage()->write($user);
+
         // TODO Gracefully handle image upload fail, especially as
         // caused by images that are too large. 
         $imageUploader = new Application_Service_ImageUploader();

@@ -16,22 +16,25 @@ class Application_Service_Translator_User_Edit {
 	
 	public function translate($post, Application_Model_User $user) {
 	    $data = $post['user'];	
-		if((!empty($data['email']) && $data['email'] != $user->getEmail() && $user->getEmail()) 
-        || (!empty($data['newPassword']) && $user->getPassword())) {
-			if($user->getPassword() && empty($data['password']) && !empty($data['newPassword'])) {
-				$this->errors['password'] = 'You must enter your current password in order to change it.';
-				return false;
-			} else if ($user->getEmail() && !empty($data['email']) && empty($data['password'])) {
+        if(!empty($data['email']) && $data['email'] != $user->getEmail() && $user->getEmail()) {
+            if($user->getPassword() == 'SET' && empty($data['password'])) {
                 $this->errors['email'] = 'You must enter your current password in order to change your email.';
                 return false;
+            }
+        }
+
+		if(!empty($data['newPassword']) && $user->getPassword() == 'SET') {
+			if($user->getPassword() == 'SET' && empty($data['password']) && !empty($data['newPassword'])) {
+				$this->errors['password'] = 'You must enter your current password in order to change it.';
+				return false;
             }
 			
 			$this->getAuthAdapter()->setIdentity($user->getEmail());
 	    	$this->getAuthAdapter()->setCredential($data['password']);
 	    	$result = Zend_Auth::getInstance()->authenticate($this->_authAdapter);
-	    	
-	    	Zend_Auth::getInstance()->getStorage()->write($user);
-	    	
+	    
+            Zend_Auth::getInstance()->getStorage()->write($user);
+            	
 			if (!$result->isValid()) {
 				$this->errors['password'] = 'The password you entered is incorrect.';
 				return false;

@@ -5,7 +5,7 @@
 <form method="post" action="/user/edit/" accept-charset="utf-8" enctype="multipart/form-data">
     <div class="input password">
         <label for="user[password]">Current Password</label>
-        <input type="password" name="user[password]" <?php echo ($this->user->getPassword() ? '' : 'disabled="disabled"'); ?> />
+        <input type="password" name="user[password]" <?php echo ($this->user->getPassword() != 'NOTSET' ? '' : 'disabled="disabled"'); ?> />
         <?php if(isset($this->errors['password'])) { ?>
             <div class="error"><?php echo $this->errors['password']; ?></div>
         <?php } ?>
