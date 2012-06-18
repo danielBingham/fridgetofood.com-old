@@ -72,7 +72,6 @@ class Application_Model_Mapper_User {
 
 		$user->setUserID($data['id'])
 			->setEmail(stripslashes($data['email']))
-			->setPassword($data['password'])
 			->setDisplayName(stripslashes($data['display_name']))
 			->setReputation($data['reputation'])
 			->setWebsite(stripslashes($data['website']))
@@ -84,6 +83,12 @@ class Application_Model_Mapper_User {
 			->setSeen(new Zend_Date($data['seen'], Zend_Date::ISO_8601))
 			->setNotified(new Zend_date($data['notified'], Zend_Date::ISO_8601))
 			->setModified(new Zend_Date($data['modified'], Zend_Date::ISO_8601));
+
+        if(!empty($data['password'])) {
+            $user->setPassword('SET');
+        } else {
+            $user->setPassword('NOTSET');
+        }
 	}
 
     // }}}	

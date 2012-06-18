@@ -72,7 +72,7 @@ class Application_Model_Persistor_User {
 		$data = $this->getMapper()->toDbArray($user);
 		$user->setUserID($this->getMapper()->getDbTable()->insert($data));
 		
-		if($user->getPassword()  && $user->getPassword() !== null) {
+		if($user->getPassword() && $user->getPassword() != 'SET' && $user->getPassword() != 'NOTSET') {
 			$this->getMapper()->setPassword($user, $user->getPassword());	
 		}
 	}
@@ -86,7 +86,7 @@ class Application_Model_Persistor_User {
 		$data = $this->getMapper()->toDbArray($user);
 		$this->getMapper()->getDbTable()->update($data, array('id=?'=>$user->getUserID()));
 		
-		if($user->getPassword() && $user->getPassword() !== null) {
+		if($user->getPassword() && $user->getPassword() != 'SET' && $user->getPassword() != 'NOTSET') {
 			$this->getMapper()->setPassword($user, $user->getPassword());	
 		}
 	}

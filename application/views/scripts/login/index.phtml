@@ -8,11 +8,13 @@
     <div id="loginForm">
         <p>Please enter your email and password to login to Fridge to Food. If you don't have an 
         account yet, and don't want to create one with Facebook or Google, then you can <a href="/user/register">Register</a> to create one.</p>
+        <p>If you forgot your password, then you can go <a href="/login/forgot">here</a> to retrieve it.</p>
         <form method="POST" action="/login/index">
         <div class="input"><label for="email">Email</label><input type="text" name="email" /></div>
         <div class="input"><label for="password">Password</label><input type="password" name="password" /></div>
         <div class="submit"><input type="submit" name="submit" value="Login" /></div> 
         </form>
+    
         <div id="errors">
             <?PHP if(isset($this->errors)) { ?>
                 <?PHP foreach($this->errors as $error) { ?>

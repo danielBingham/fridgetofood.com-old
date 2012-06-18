@@ -53,7 +53,6 @@ class LoginController extends Zend_Controller_Action
 		
 		$userRaw = $this->_authAdapter->getResultRowObject();
         $user = Application_Model_Query_User::getInstance()->get($userRaw->id);
-        $user->setPassword(null);
 		$this->_auth->getStorage()->write($user);
         $this->seeUser($user);
 		
@@ -106,6 +105,56 @@ class LoginController extends Zend_Controller_Action
     		Zend_Auth::getInstance()->clearIdentity();
     	}
     	$this->_helper->redirector('index', 'index');
+    }
+
+    // }}}
+    // {{{ forgotAction():              public void
+
+    public function forgotAction() {
+        $this->view->error = null;
+        if($this->getRequest()->isPost()) {
+            $email = $this->getRequest()->getParam('email', null);
+            if($email === null) {
+                throw new RuntimeException('We have post, but no e-mail.  This should not happen.  Please report this as a bug.');
+            }
+
+            $user = Application_Model_Query_User::getInstance()->findOne(array('email'=>$email));
+            if($user === null) {
+                $this->view->state = 'NOTSENT';
+                $this->view->error = 'NOUSER';
+                return;
+            }
+
+            $passwordGenerator = new Application_Service_User_PasswordGenerator();
+            $password = $passwordGenerator->generate();
+            $user->setPassword($password);
+
+            $persistor = new Application_Model_Persistor_User();
+            $persistor->save($user); 
+
+            $mail = new Zend_Mail();
+            $text = <<< END
+Here is the new password you requested for Fridge to Food: $password
+
+You requested it for the email: $email
+
+This is only a temporary password, please log in and change it as soon as possible.  You can change it by
+editing your profile.  Log in and then click on your name in the top right corner.  This will take you
+to your profile view.  Click 'Edit' on the top right of the profile header.  You will need to enter
+your current password and then enter a new one and edit your profile.
+END;
+            $mail->setBodyText($text);
+            $mail->setFrom('no-reply@fridgetofood.com');
+            $mail->addTo($email);
+            $mail->setSubject('Your Temporary Fridge to Food Password');
+            $mail->send(); 
+
+            $this->view->state = 'SENT';
+            return;
+        }
+        $this->view->state = 'NOTSENT';
+
+        
     }
 
     // }}}
