@@ -1,30 +1,13 @@
 <?php
-abstract class Application_Model_Abstract {
-	
-	private $_builder;
-	private $_lazy;
+/**
+    Class: Application_Model_Abstract
+    Description:  An abstract base model underlying all model classes.
+        Enables easy storing and management of a model's fields and
+        removes the necessity of using setters and getters.
 
-	public abstract function ensureSafeLoad();
-	
-	protected function loadLazy() {
-		return $this->_lazy;
-	}
-	
-	protected function allowLazyLoad() {
-		$this->_lazy = true;
-	}
-	
-	protected function getBuilder() {
-		return $this->_builder;
-	}
-	
-	protected function setBuilder(Application_Model_Builder_Abstract $builder) {
-		$this->_builder = $builder;
-		return $this;
-	}
-		
-		
-	
+
+*/
+abstract class Application_Model_Abstract extends SwaleORM_Model_Abstract {
 	
 }
 

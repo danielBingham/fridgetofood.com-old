@@ -1,166 +1,74 @@
 <?php
+/*
+ * Copyright:
+ *		Copyright (C) 2009-2012 Daniel Bingham (http://www.theroadgoeson.com)
+ *
+ * License:
+ *
+ * This software is licensed under the MIT Open Source License which reads as
+ * follows:
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in the
+ * Software without restriction, including without limitation the rights to use, copy,
+ * modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so, subject to the
+ * following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies
+ * or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * For more information see here: http://www.opensource.org/licenses/mit-license.php
+ */
 
+/**
+    Model: Image
+    Table: images
+    Description:  Contains all information for an image stored on the server.  The image
+    can be attached to a user or a recipe.  
+
+    Fields:
+        id - The images id in the database.
+        userID - The id of the user that uploaded the image.
+        width - The base width of the full image.
+        height - The base height of the full image.
+        views - The number of views the image has received.
+        created - A timestamp representing when the image database row was created.
+        modified - A timestamp representing when this image's database row was last updated. 
+
+    Associations:
+        recipe - The recipe to which this image is attached.
+        user - The user that uploaded and owns the image.
+
+*/
 class Application_Model_Image extends Application_Model_Abstract {
-	private $_imageID;
-	private $_userID;
-	private $_width;
-	private $_height;
-	private $_views;
-	private $_created;
-	private $_modified;
-	
-	// Virtual
-	private $_votes;
-	
-	// Associations
-	private $_recipe;
-	private $_farm;
-	private $_user;
-	
-	public function ensureSafeLoad() {
-		if($this->_imageID === false) {
-			throw new Exception('In order to load Image Associations a imageID must be set.');
-		}
-	}
+    public static $_modelName = 'Image';
+    public static $_fields = array('id', 'user_id', 'width', 'height', 'views', 'created', 'modified'), 
+    public static $_associations = array(
+        'user'=>array('type'=>'one', 'class'=>'Application_Model_User', 'save'=>false));
+    public static $_virtuals = array('votes');
 
-	
+    /**
+        Determine whether this image has a related file stored in the image directory.  Assume
+        a size of medium if no size given.  
+
+        Possible sizes: 
+            small - 100px x 100px, 
+            medium - 300px x 300px, 
+            large - 1024px x 780px, 
+            full - $this->width x $this->height
+    */	
 	public function fileExists($size='medium') {
-		$path = '/srv/www/img.fridgetofood.com/' . $size . '/' . $this->getImageID() . '.jpg';
+		$path = '/srv/www/img.fridgetofood.com/' . $size . '/' . $this->id . '.jpg';
 		return file_exists($path);
 		
-	}
-	
-	/****************************************************************************
-	 * Associations
-	 ****************************************************************************/
-	
-	public function getRecipe() {
-		if($this->loadLazy()) {
-			$this->getBuilder()->build('recipe', $this);
-		}
-		return $this->_recipe;
-	}
-	
-	public function setRecipe(Application_Model_Recipe $recipe) {
-		$this->_recipe = $recipe;
-		return $this;
-	}
-	
-	public function getUser() {
-		if($this->loadLazy()) {
-			$this->getBuilder()->build('user', $this);
-		}
-		return $this->_user;
-	}
-	
-	public function setUser(Application_Model_User $user) {
-		$this->_user = $user;
-		return $this;
-	}
-	
-	public function getFarm() {
-		if($this->loadLazy()) {
-			$this->getBuilder()->build('farm', $this);
-		}
-		return $this->_farm;
-	}
-	
-	public function setFarm(Application_Model_Farm $farm) {
-		$this->_farm = $farm;
-		return $this;
-	}
-	
-	
-	/****************************************************************************
-	 * Virtual API
-	 ****************************************************************************/
-	public function getVotes() {
-		if($this->loadLazy()) {
-			$this->getBuilder()->build('virtualAPI', $this);
-		}
-		return $this->_votes;
-	}
-	
-	public function setVotes($votes) {
-		$this->_votes = $votes;
-		return $this;
-	}
-	
-	/****************************************************************************
-	 * Standard API
-	 ****************************************************************************/
-	
-	
-	public function __construct($lazy=true) {
-		$this->_imageID = false;
-		if($lazy) {
-			$this->setBuilder(new Application_Model_Builder_Image())
-				->allowLazyLoad();	
-		}
-	
-	}
-	
-	public function getImageID() {
-		return $this->_imageID;
-	}
-	
-	public function setImageID($imageID) {
-		$this->_imageID = $imageID;
-		return $this;
-	}
-	
-	public function getUserID() {
-		return $this->_userID;
-	}
-	
-	public function setUserID($userID) {
-		$this->_userID = $userID;
-		return $this;
-	}
-	
-	public function getWidth() {
-		return $this->_width;
-	}
-	
-	public function setWidth($width) {
-		$this->_width = $width;
-		return $this;
-	}
-	
-	public function getHeight() {
-		return $this->_height;
-	}
-	
-	public function setHeight($height) {
-		$this->_height = $height;
-		return $this;
-	}
-	
-	public function getViews() {
-		return $this->_views;
-	}
-	
-	public function setViews($views) {
-		$this->_views = $views;
-		return $this;
-	}
-	
-	public function getCreated() {
-		return $this->_created;
-	}
-	
-	public function setCreated($created) {
-		$this->_created = $created;
-		return $this;
-	}
-	
-	public function getModified() {
-		return $this->_modified;
-	}
-	
-	public function setModified($modified) {
-		$this->_modified = $modified;
-		return $this;
 	}
 
 }

@@ -1,8 +1,7 @@
 <?php
 class Application_Model_Query_Recipe extends Application_Model_Query_Abstract {
+    protected $_model='Recipe';
 	private static $_instance;
-	private $_mapper;
-	private $_builder;
 
     // {{{ getTotal():                                                                              public int
 	
@@ -55,47 +54,36 @@ class Application_Model_Query_Recipe extends Application_Model_Query_Abstract {
     }
 
     // }}}
-	
-	/****************************************************************************
-	 * Standard Query API
-	 ****************************************************************************/
-	
-	/**
-	 * 
-	 */
-	public static function getInstance() {
-		if(empty(Application_Model_Query_Recipe::$_instance)) {
-			Application_Model_Query_Recipe::$_instance = new Application_Model_Query_Recipe();
+
+    // Virtual Field Determiners
+    // {{{ determineVoteTotal(Application_Model_Recipe $recipe)
+
+    public function determineVoteTotal(Application_Model_Recipe $recipe) {
+		$db = Zend_Db_Table::getDefaultAdapter();
+		$result = $db->fetchAll('select COALESCE(SUM(COALESCE(recipe_votes.vote, 0)), 0) as voteTotal from recipe_votes where recipe_votes.recipe_id=?', $recipe->getRecipeID());
+
+		if(count($result) != 0) {
+			$recipe->voteTotal = $result[0]['voteTotal'];
+		} else {
+			$recipe->voteTotal = 0;
 		}
-		return Application_Model_Query_Recipe::$_instance;
-	}
-	
-	/**
-	 * 
-	 */
-	protected function getMapper() {
-		if(empty($this->_mapper)) {
-			$this->_mapper = new Application_Model_Mapper_Recipe();
+    }
+
+    // }}}
+    // {{{ determineNumberOfComments(Application_Model_Recipe $recipe)
+
+    public function determineNumberOfComments(Application_Model_Recipe $recipe) {
+		$db = Zend_Db_Table::getDefaultAdapter();
+		$result = $db->fetchAll('select count(recipe_comments.id) as numberOfComments from recipe_comments where recipe_id=?', $recipe->getRecipeID());
+
+		if(count($result) != 0) {
+			$recipe->numberOfComments = $result[0]['numberOfComments'];
+		} else {
+			$recipe->numberOfComments = 0;
 		}
-		return $this->_mapper;
-	}
-	
-	/**
-	 * 
-	 */
-	public function getBuilder() {
-		if(empty($this->_builder)) {
-			$this->_builder = new Application_Model_Builder_Recipe();
-		}
-		return $this->_builder;
-	}
-	
-	/**
-	 * 
-	 */
-	public function getModel() {
-		return new Application_Model_Recipe();
-	}
+    }
+
+    // }}}
 	
 }
 
