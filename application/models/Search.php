@@ -1,136 +1,52 @@
 <?php
+/*
+ * Copyright:
+ *		Copyright (C) 2009-2012 Daniel Bingham (http://www.theroadgoeson.com)
+ *
+ * License:
+ *
+ * This software is licensed under the MIT Open Source License which reads as
+ * follows:
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in the
+ * Software without restriction, including without limitation the rights to use, copy,
+ * modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so, subject to the
+ * following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies
+ * or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * For more information see here: http://www.opensource.org/licenses/mit-license.php
+ */
+
+/**
+    Model: Search 
+    Table: searches 
+    Description:  Represents a search in the database.  Used for search
+        caching.
+    Fields:
+        id - The images id in the database.
+        query - The query the user entered for this search.
+        created - A timestamp recording when this search was first used.
+        used - A timestamp recording the most recent time this search was used.
+        type - What type of search was this? (deprecated)
+    Associations:
+
+*/
 
 class Application_Model_Search extends Application_Model_Abstract {
-  
-    // Primary Data 
-    private $_searchID;
-    private $_query;
-    private $_created;
-    private $_used;
-    private $_type;
-
-    // Associations
-    private $_searchResults;
-
-    // {{{ public ensureSafeLoad()
-	
-	public function ensureSafeLoad() {
-		if($this->_searchID === false) {
-			throw new Exception('In order to load Search Associations a searchID must be set.');
-		}
-	}
-
-    // }}}
-
-
-    // Association Methods
-    // {{{ getSearchResults():                                              public array(Application_Model_SearchResults)
-
-    public function getSearchResults() {
-        if(empty($this->_searchResults) && $this->loadLazy()) {
-            $this->getBuilder()->build('searchResults', $this);
-        }
-        return $this->_searchResults;
-    }
-
-    // }}}
-    // {{{ setSearchResults(array $searchResults):                          public void
-
-    public function setSearchResults(array $searchResults) {
-        $this->_searchResults = $searchResults;
-        return $this;
-    }
-
-    // }}}
-    
-
-    // {{{ __construct($lazy=true)
-
-    public function __construct($lazy=true) {
-		$this->_searchID= false;
-		if($lazy) {
-			$this->setBuilder(new Application_Model_Builder_Search())
-				->allowLazyLoad();
-		}
-	}
-
-    // }}}
-    // {{{ getSearchID()                                                    public int
-
-    public function getSearchID() {
-        return $this->_searchID;
-    }
-
-    // }}}
-    // {{{ setSearchID($searchID):                                          public void
-
-    public function setSearchID($searchID) {
-        $this->_searchID = $searchID;
-        return $this;
-    }
-
-    // }}}
-    // {{{ getQuery():                                                      public string 
-
-    public function getQuery() {
-        return $this->_query;
-    }
-
-    // }}}
-    // {{{ setQuery($query):                                                public void    
-
-    public function setQuery($query) {
-        $this->_query = $query;
-        return $this;
-    }
-
-    // }}}
-    // {{{ getCreated():                                                    public Zend_Date
-
-    public function getCreated() {
-        return $this->_created; 
-    }
-
-    // }}}
-    // {{{ setCreated(Zend_Date $created);                                  public void
-
-    public function setCreated(Zend_Date $created) {
-        $this->_created = $created;
-        return $this;
-    }
-
-    // }}}
-    // {{{ getUsed():                                                       public boolean
-
-    public function getUsed() {
-        return $this->_used;
-    }
-
-    // }}}
-    // {{{ setUsed($used):                                                  public void
-
-    public function setUsed($used) {
-        $this->_used = $used;
-        return $this;
-    }
-
-    // }}}
-    // {{{ getType():                                                       public string 
-
-    public function getType() {
-        return $this->_type;
-    }
-
-    // }}}
-    // {{{ setType($type):                                                  public void
-
-    public function setType($type) {
-        $this->_type = $type;
-        return $this;
-    }
-
-    // }}}
+    public static $_modelName = 'Search';
+    public static $_fields = array('id', 'query', 'created', 'used', 'type');
+    public static $_associations = array(
+        'searchResults'=>array('type'=>'many', 'class'=>'Application_Model_SearchResult', 'save'=>true));
 
 }
-
-?>

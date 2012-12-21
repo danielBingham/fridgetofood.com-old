@@ -1,31 +1,60 @@
 <?php
+/*
+ * Copyright:
+ *		Copyright (C) 2009-2012 Daniel Bingham (http://www.theroadgoeson.com)
+ *
+ * License:
+ *
+ * This software is licensed under the MIT Open Source License which reads as
+ * follows:
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in the
+ * Software without restriction, including without limitation the rights to use, copy,
+ * modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so, subject to the
+ * following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies
+ * or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * For more information see here: http://www.opensource.org/licenses/mit-license.php
+ */
+
 /**
-*
+    Model: RecipeSection
+    Table: recipe_sections 
+    Description: Represents a subsection of a recipe containing certain ingredients
+        and instructions.  Could be a dressing, or a sauce or just a stage of the recipe.
+
+    Fields:
+        id - The section's id in the database.
+        recipe_id - The id of the recipe to which this section belongs.
+        title - The title of the section.
+        position - This sections position among the other sections, used to order them.
+        base - Is this the main or primary section?  Boolean.
+
+    Associations:
+        recipeIngredients - The ingredients this section contains.
+        recipeInstructions - The instructions that this section contains.
 */
 class Application_Model_RecipeSection extends Application_Model_Abstract {
-	private $_recipeSectionID;
-	private $_recipeID;
-	private $_title;
-	private $_position;
-	private $_main;
-	
-	// Associations
-	private $_recipeIngredients;
-	private $_recipeInstructions;
+    public static $_modelName = 'RecipeSection';
+    public static $_fields = array('id', 'recipe_id', 'title', 'position', 'base');
+    public static $_associations = array(
+        'recipeIngredients'=>array('type'=>'many', 'class'=>'Application_Model_RecipeIngredient', 'save'=>true),
+        'recipeInstructions'=>array('type'=>'many', 'class'=>'Application_Model_RecipeInstructions', 'save'=>true)); 
 
-    // {{{ public void ensureSafeLoad()
-	
-	public function ensureSafeLoad() {
-		if($this->_recipeSectionID === false) {
-			throw new Exception('In order to load RecipeSection Associations a recipeSectionID must be set.');
-		}
-	}
-
-    // }}}
-    
 
     // Model Methods
-    // {{{ public boolean hasIngredients()
+    // {{{ hasIngredients():                                                public boolean 
     
     public function hasIngredients() {
 
@@ -37,7 +66,7 @@ class Application_Model_RecipeSection extends Application_Model_Abstract {
     }
    
      // }}}
-    // {{{ public boolean hasInstructions()
+    // {{{ hasInstructions():                                               public boolean 
 
     public function hasInstructions() {
         if($this->getInstructionCount() > 0) {
@@ -48,159 +77,5 @@ class Application_Model_RecipeSection extends Application_Model_Abstract {
     }
 
     // }}}	
-    // {{{ public int getIngredientCount()
- 
-    public function getIngredientCount() {
-		if(empty($this->_recipeIngredients) && $this->loadLazy()) {
-			$this->getBuilder()->build('recipeIngredients', $this);
-		}
-        return count($this->_recipeIngredients);
-    }
 
-    // }}}	
-    // {{{ public int getInstructionCount()
-    
-    public function getInstructionCount() {
-        if(empty($this->_recipeInstructions) && $this->loadLazy()) {
-            $this->getBuilder()->build('recipeInstructions', $this);
-        }
-        return count($this->_recipeInstructions);
-    }
-
-    // }}}
- 
-    // Associations
-    // {{{ public array getRecipeIngredients()
-
-	public function getRecipeIngredients() {
-		if(empty($this->_recipeIngredients) && $this->loadLazy()) {
-			$this->getBuilder()->build('recipeIngredients', $this);
-		}
-		return $this->_recipeIngredients;
-	}
-
-    // }}} 
-    // {{{ public $this setRecipeIngredients(array $recipeIngredients)
-	
-	public function setRecipeIngredients(array $recipeIngredients) {
-		$this->_recipeIngredients = $recipeIngredients;
-		return $this;
-	}
-
-    // }}}
-    // {{{ public array getRecipeInstruction()
-	
-	public function getRecipeInstructions() {
-		if(empty($this->_recipeInstructions) && $this->loadLazy()) {
-			$this->getBuilder()->build('recipeInstructions', $this);
-		}
-		return $this->_recipeInstructions;
-	}
-
-    // }}}
-    // {{{ public $this setRecipeInstructions(array $recipeInstructions)
-	
-	public function setRecipeInstructions(array $recipeInstructions) {
-		$this->_recipeInstructions = array();
-		foreach($recipeInstructions as $instruction) {
-			if(!($instruction instanceof Application_Model_RecipeInstruction)) {
-				throw new Exception('All instructions must be instances of Application_Model_RecipeInstruction.');
-			}
-			$this->_recipeInstructions[(int)$instruction->getNumber()] = $instruction;
-		}
-		ksort($this->_recipeInstructions);
-		return $this;
-	}
-
-    // }}}
-	
-    // Primary API
-    // {{{ public void  __construct($lazy=true)
-
-	public function __construct($lazy = true) {
-		$this->_recipeSectionID = false;
-		if($lazy) {
-			$this->setBuilder(new Application_Model_Builder_RecipeSection())
-				->allowLazyLoad();
-		}
-	}
-
-    // }}}
-    // {{{ public int getRecipeSectionID()
-	
-	public function getRecipeSectionID() {
-		return $this->_recipeSectionID;
-	}
-
-    // }}}
-    // {{{ public $this setRecipeSectionID($recipeSectionID)
-	
-	public function setRecipeSectionID($recipeSectionID) {
-		$this->_recipeSectionID = $recipeSectionID;
-		return $this;
-	}
-
-    // }}}
-    // {{{ public int getRecipeID()
-	
-	public function getRecipeID() {
-		return $this->_recipeID;
-	}
-
-    // }}}
-    // {{{ public $this setRecipeID($recipeID)
-	
-	public function setRecipeID($recipeID) {
-		$this->_recipeID = $recipeID;
-		return $this;
-	}
-
-    // }}}
-    // {{{ public string getTitle()
-    	
-	public function getTitle() {
-		return $this->_title;
-	}
-
-    // }}}
-    // {{{ public $this setTitle($title)
-	
-	public function setTitle($title) {
-		$this->_title = $title;
-		return $this;
-	}
-
-    // }}}
-    // {{{ public int getPosition()
-	
-	public function getPosition() {
-		return $this->_position;
-	}
-
-    // }}}
-    // {{{ public $this setPosition($position)
-	
-	public function setPosition($position) {
-		$this->_position = $position;
-		return $this;
-	}
-
-    // }}}
-    // {{{ public boolean isMain()
-	
-	public function isMain() {
-		return $this->_main;
-	}
-
-    // }}}
-    // {{{ public $this setMain($main)
-	
-	public function setMain($main) {
-		$this->_main = $main;
-		return $this;
-	}
-    
-    // }}}	
-	
 }
-
