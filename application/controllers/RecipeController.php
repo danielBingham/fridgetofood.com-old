@@ -36,8 +36,10 @@
 class RecipeController extends Zend_Controller_Action
 {
 
-    // {{{ indexAction():               public void
 
+	/**
+	 *
+	 */
     public function indexAction()
     {
         $page = $this->getRequest()->getParam('page', 1);
@@ -49,9 +51,9 @@ class RecipeController extends Zend_Controller_Action
         $this->view->paginator = $paginator;
     }
 
-    // }}}
-    // {{{ viewAction():                public void
-
+	/**
+	 *
+	 */
     public function viewAction()
     {
         $recipeID = $this->getRequest()->getParam('id');
@@ -72,15 +74,13 @@ class RecipeController extends Zend_Controller_Action
         $this->view->title = $recipe->getTitle();
         $this->view->recipe = $recipe;
     }
-    
-    // }}}
-    // {{{ editAction():                public void
    
     /**
     * Action to allow a user to add a recipe or edit a recipe.  This is the long
     * recipe add forum.  
     */ 
-    public function editAction() {
+    public function editAction() 
+	{
         if(!Zend_Auth::getInstance()->hasIdentity()) {
             return $this->_helper->redirector('index', 'login'); 
         }
@@ -168,10 +168,8 @@ class RecipeController extends Zend_Controller_Action
         $this->view->instructions = $instructionSections;
     }
 
-    // }}}
-    // {{{ submitAction():              public void
-
-    public function submitAction() {
+    public function submitAction() 
+	{
         if(!Zend_Auth::getInstance()->hasIdentity()) {
             return $this->_helper->redirector('index', 'login'); 
         }
@@ -190,10 +188,8 @@ class RecipeController extends Zend_Controller_Action
         }
     }
 
-    // }}}
-    // {{{ deleteAction():              public void
-
-    public function deleteAction() {
+    public function deleteAction() 
+	{
         if(!Zend_Auth::getInstance()->hasIdentity()) {
             $this->_helper->redirector('index', 'login');
         }
@@ -205,8 +201,8 @@ class RecipeController extends Zend_Controller_Action
 
         $recipe = Application_Model_Query_Recipe::getInstance()->get($id);
        
-        // FIXME: Handle admin authentication and delete ability. 
-        if(Zend_Auth::getInstance()->getIdentity()->getUserID() != $recipe->getUserID()) {
+        if(Zend_Auth::getInstance()->getIdentity()->getUserID() != $recipe->getUserID()
+            && Zend_Auth::getInstance()->getIdentity()->getUserID() != 2) {
             return $this->_helper->redirector('view', 'recipe', null, array('id'=>$recipe->getRecipeID())); 
         }
         
@@ -215,10 +211,8 @@ class RecipeController extends Zend_Controller_Action
         $this->_helper->redirector('index', 'recipe');
     }
 
-    // }}}            
-    // {{{ voteAction():                public void
-
-    public function voteAction() {
+    public function voteAction() 
+	{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
  
@@ -254,10 +248,8 @@ class RecipeController extends Zend_Controller_Action
         echo $recipe->getVoteTotal(); 
     }
 
-    // }}}
-    // {{{ commentAction():             public void
-
-    public function commentAction() {
+    public function commentAction() 
+	{
         if(!Zend_Auth::getInstance()->hasIdentity()) {
             $this->_helper->redirector('index', 'login');
         }
@@ -273,10 +265,8 @@ class RecipeController extends Zend_Controller_Action
         throw new RuntimeException('We should never get here.  There must have been an error of some kind.');
     }
 
-    // }}}
-    // {{{ editCommentAction():         public void
-
-    public function editCommentAction() {
+    public function editCommentAction() 
+	{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -307,11 +297,9 @@ class RecipeController extends Zend_Controller_Action
 
         }
     }
-
-    // }}}
-    // {{{ deleteCommentAction():       public void
     
-    public function deleteCommentAction() {
+    public function deleteCommentAction() 
+	{
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -327,9 +315,6 @@ class RecipeController extends Zend_Controller_Action
         return; 
     }
     
-    // }}}
-
-
 }
 
 
