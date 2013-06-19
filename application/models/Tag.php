@@ -1,56 +1,159 @@
 <?php
-/*
- * Copyright:
- *		Copyright (C) 2009-2012 Daniel Bingham (http://www.theroadgoeson.com)
- *
- * License:
- *
- * This software is licensed under the MIT Open Source License which reads as
- * follows:
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in the
- * Software without restriction, including without limitation the rights to use, copy,
- * modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
- * and to permit persons to whom the Software is furnished to do so, subject to the
- * following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies
- * or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
- * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
- * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
- * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
- * USE OR OTHER DEALINGS IN THE SOFTWARE.
- *
- * For more information see here: http://www.opensource.org/licenses/mit-license.php
- */
 
-/**
-    Model: Tag
-    Table: tags 
-    Description:  A wrapper for a single tag.  
-
-    Fields:
-        id - The tag's id in the database.
-        name - The tag's name.
-        type - The type of tag.  (general, course, diet, allergen, cuisine)
-        description - A short description of the tag.
-        revision - The id of the current revision of the tag.
-        user_id - The id of the user who owns this revision.
-        created - A timestamp recording when the tag was created.
-        modified - A timestamp recording when the tag was last modified.  
-
-    Associations:
-        User - The user who owns this revision.
-        Recipes - The recipes that are tagged with this tag.
-*/
 class Application_Model_Tag extends Application_Model_Abstract {
-    public static $_modelName = 'Tag';
-    public static $_fields = array('id', 'name', 'type', 'description', 'revision', 'user_id', 'created', 'modified');
-    public static $_associations = array(
-        'user'=>array('type'=>'one', 'class'=>'Application_Model_User', 'save'=>false),
-        'recipeTags'=>array('type'=>'many', 'class'=>'Application_Model_RecipeTag', 'save'=>false));
+	private $_tagID;
+	private $_name;
+	private $_type;
+	private $_description;
+	private $_revision;
+	private $_userID;
+	private $_created;
+	private $_modified;
+
+	
+	// Virtual
+	private $_recipeCount;
+	
+	// Associations
+	private $_user;
+	private $_recipes;
+	
+	public function ensureSafeLoad() {
+		if($this->_tagID === false) {
+			throw new Exception('In order to load Tag Associations a tagID must be set.');
+		}
+	}
+	
+	/****************************************************************************
+	 * Associations
+	 ****************************************************************************/
+	public function getUser() {
+		if($this->loadLazy()) {
+			$this->getBuilder()->build('user', $this);
+		}
+		return $this->_user;
+	}
+	
+	public function setUser(Application_Model_User $user) {
+		$this->_userID = $user->getUserID();
+		$this->_user = $user;
+		return $this;
+	}
+	
+	public function getRecipes() {
+		if($this->loadLazy()) {
+			$this->getBuilder()->build('recipes', $this);
+		}
+		return $this->_recipes;
+	}
+	
+	public function setRecipes($recipes) {
+		$this->_recipes = $recipes;
+		return $this;
+	}
+	
+	/****************************************************************************
+	 * Virtual API
+	 ****************************************************************************/
+	
+	public function getRecipeCount() {
+		if($this->loadLazy()) {
+			$this->getBuilder()->build('virtualAPI', $this);
+		}
+		return $this->_recipeCount;
+	}
+	
+	public function setRecipeCount($recipeCount) {
+		$this->_recipeCount = $recipeCount;
+		return $this;
+	}
+	
+	
+	/****************************************************************************
+	 * Primary API
+	 ****************************************************************************/
+	
+	public function __construct($lazy = true) {
+		$this->_tagID = false;
+		if($lazy) {
+			$this->setBuilder(new Application_Model_Builder_Tag())
+				->allowLazyLoad();
+		}
+	}
+	
+	public function getTagID() {
+		return $this->_tagID;
+	}
+	
+	public function setTagID($tagID) {
+		$this->_tagID = $tagID;
+		return $this;
+	}
+	
+	public function getName() {
+		return $this->_name;
+	}
+	
+	public function setName($name) {
+		$this->_name = $name;
+		return $this;
+	}
+	
+	public function getType() {
+		return $this->_type;
+	}
+	
+	public function setType($type) {
+		$this->_type = $type;
+		return $this;
+	}
+	
+	
+	public function getDescription() {
+		return $this->_description;
+	}
+	
+	public function setDescription($description) {
+		$this->_description = $description;
+		return $this;
+	}
+	
+	public function getRevision() {
+		return $this->_revision;
+	}
+	
+	public function setRevision($revision) {
+		$this->_revision = $revision;
+		return $this;
+	}
+	
+	public function getUserID() {
+		return $this->_userID;
+	}
+	
+	public function setUserID($userID) {
+		$this->_userID = $userID;
+		return $this;
+	}
+	
+	public function getCreated() {
+		return $this->_created;
+	}
+	
+	public function setCreated($created) {
+		$this->_created = $created;
+		return $this;
+	}
+	
+	public function getModified() {
+		return $this->_modified;
+	}
+	
+	public function setModified($modified) {
+		$this->_modified = $modified;
+		return $this;
+	}
+
+
 }
+

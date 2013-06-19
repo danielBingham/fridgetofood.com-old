@@ -1,5 +1,7 @@
 <?php
 class Application_Model_Persistor_User {
+	
+	private $_mapper;
 
     // {{{ associateFacebook(Application_Model_User $user, $email):         public void
 
@@ -16,7 +18,7 @@ class Application_Model_Persistor_User {
     }
 
     // }}}
-    // {{{ associateGoogle(Application_Model_User $user, $email):         public void
+    // {{{ associateFacebook(Application_Model_User $user, $email):         public void
 
     public function associateGoogle(Application_Model_User $user, $email) {
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -32,24 +34,63 @@ class Application_Model_Persistor_User {
 
     // }}}
     
+    // Standard Persistor API
+    // {{{ protected Application_Model_Mapper_User getMapper()
+	
+	protected function getMapper() {
+		if(empty($this->_mapper)) {
+			$this->_mapper = new Application_Model_Mapper_User();
+		}
+		return $this->_mapper;
+		
+	}
+
+    // }}}
     
     // {{{ public void save(Application_Model_User $user)
     	
 	public function save(Application_Model_User $user) {
-		if($user->id) {
-            $user->modified = Zend_Date::now();
+		if($user->getUserID()) {
+			$this->update($user);
 		} else {
-            $user->created = Zend_Date::now();
-            $user->modified = Zend_Date::now();
+			$this->insert($user);
 		}
-        parent::save($user);
         
-        if(Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getIdentity()->id == $user->id) {
+        if(Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getIdentity()->getUserID() == $user->getUserID()) {
            Zend_Auth::getInstance()->getStorage()->write($user); 
         }
 	}
 
     // }}}
 
+    // {{{ protected void insert(Application_Model_User $user)	
+	
+	protected function insert(Application_Model_User $user) {
+		$user->setCreated(Zend_Date::now());
+		$user->setModified(Zend_Date::now());
+	
+		$data = $this->getMapper()->toDbArray($user);
+		$user->setUserID($this->getMapper()->getDbTable()->insert($data));
+		
+		if($user->getPassword() && $user->getPassword() != 'SET' && $user->getPassword() != 'NOTSET') {
+			$this->getMapper()->setPassword($user, $user->getPassword());	
+		}
+	}
+    
+    // }}}
+    // {{{ protected void update(Application_Model_User $user)
+	
+	protected function update(Application_Model_User $user) {
+		$user->setModified(Zend_Date::now());
+		
+		$data = $this->getMapper()->toDbArray($user);
+		$this->getMapper()->getDbTable()->update($data, array('id=?'=>$user->getUserID()));
+		
+		if($user->getPassword() && $user->getPassword() != 'SET' && $user->getPassword() != 'NOTSET') {
+			$this->getMapper()->setPassword($user, $user->getPassword());	
+		}
+	}
+    
+    // }}}
 }
 ?>

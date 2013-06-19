@@ -1,5 +1,7 @@
 <?php
-class Application_Model_Mapper_User extends Application_Model_Mapper_Base {
+class Application_Model_Mapper_User {
+	private $_dbTable;
+
     // {{{ updateVirtualAPI(Application_Model_User $user):                  public void
 	
 	public function updateVirtualAPI(Application_Model_User $user) {
@@ -11,6 +13,14 @@ class Application_Model_Mapper_User extends Application_Model_Mapper_Base {
 		} else {
 			$user->setRecipeCount(0);
 		}
+	}
+
+    // }}}
+    // {{{ setPassword($user, $password):                                   public void
+	
+	public function setPassword($user, $password) {
+		$db = Zend_Db_Table::getDefaultAdapter();
+		$db->query('update users set password=md5(?) where id=?', array($password, $user->getUserID()));
 	}
 
     // }}}
@@ -59,26 +69,60 @@ class Application_Model_Mapper_User extends Application_Model_Mapper_Base {
     // {{{ fromDbArray(Application_Model_User $user, array $data):          public void
 	
 	public function fromDbArray(Application_Model_User $user, array $data) {
-        parent::fromDbArray($user, $data);
-        $user->created = new Zend_Date($user->created, Zend_Date::ISO_8601);
-        $user->seen = new Zend_Date($user->seen, Zend_Date::ISO_8601);
-        $user->notified = new Zend_Date($user->notified, Zend_Date::ISO_8601);
-        $user->modified = new Zend_Date($user->modified, Zend_Date::ISO_8601);
-        $user->import_blog = ($user->import_blog == 1 ? true : false);
-        $user->password = ($user->password == null ? 'NOTSET' : 'SET');
+
+		$user->setUserID($data['id'])
+			->setEmail(stripslashes($data['email']))
+			->setDisplayName(stripslashes($data['display_name']))
+			->setReputation($data['reputation'])
+			->setWebsite(stripslashes($data['website']))
+			->setWebsiteURL(stripslashes($data['website_url']))
+			->setBlogImport(($data['import_blog'] == 1 ? true : false))
+			->setAbout(stripslashes($data['about']))
+			->setImageID($data['image_id'])
+			->setCreated(new Zend_Date($data['created'], Zend_Date::ISO_8601))
+			->setSeen(new Zend_Date($data['seen'], Zend_Date::ISO_8601))
+			->setNotified(new Zend_date($data['notified'], Zend_Date::ISO_8601))
+			->setModified(new Zend_Date($data['modified'], Zend_Date::ISO_8601));
+
+        if(!empty($data['password'])) {
+            $user->setPassword('SET');
+        } else {
+            $user->setPassword('NOTSET');
+        }
 	}
 
     // }}}	
     // {{{ toDbArray(Application_Model_User $user):                         public array
 	
 	public function toDbArray(Application_Model_User $user) {
-        $data = parent::toDbArray($user);
-        if($data['password'] == 'SET' || $data['password'] == 'NOTSET') {
-            unset($data['password']);
-        }
-        $data['created'] = $data['created']->toString('YYYY-MM-dd HH:mm:ss');
-        return $data;	
-    }
+		$data = array(
+			'email'=>$user->getEmail(),
+			'display_name'=>$user->getDisplayName(),
+			'website'=>$user->getWebsite(),
+			'website_url'=>$user->getWebsiteURL(),
+			'import_blog'=>($user->wantsBlogImport() ? 1 : 0),
+			'about'=>$user->getAbout(),
+			'image_id'=>$user->getImageID(),
+		);
+		
+		if($user->getCreated()) {
+			$data['created'] = $user->getCreated()->toString('yyyy-MM-dd HH:mm:ss');
+		}
+		
+		if($user->getModified()) {
+			$data['modified'] = $user->getModified()->toString('yyyy-MM-dd HH:mm:ss');
+		}
+		
+		if($user->getNotified()) {
+			$data['notified'] = $user->getNotified()->toString('yyyy-MM-dd HH:mm:ss');
+		}
+		
+		if($user->getSeen()) {
+			$data['seen'] = $user->getSeen()->toString('yyyy-MM-dd HH:mm:ss');
+		}
+		
+		return $data;
+	}
 
     // }}}
 
