@@ -1,9 +1,9 @@
 <?php
-class Application_Model_Mapper_Tag extends Application_Model_Mapper_Base {
-
-    // {{{ getRecipeCount(Application_Model_Tag $tag)
+class Application_Model_Mapper_Tag {
+	private $_dbTable;
 	
-	public function determineRecipeCount(Application_Model_Tag $tag) {
+	
+	public function getRecipeCount(Application_Model_Tag $tag) {
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$results = $db->fetchAll('select count(id) as recipe_count from recipe_tags where tag_id=?', $tag->getTagID());
 
@@ -13,27 +13,49 @@ class Application_Model_Mapper_Tag extends Application_Model_Mapper_Base {
 			$tag->setRecipeCount(0);
 		}
 	}
+	
+	
+	/****************************************************************************
+	 * Standard Mapper API
+	 ****************************************************************************/
+	
+	
+	public function getDbTable() {
+		if(empty($this->_dbTable)) {
+			$this->_dbTable = new Application_Model_DbTable_Tag();
+		}
+		return $this->_dbTable;
+	}
 
-    // }}}
-    // {{{ fromDbArray(Application_Model_Tag $tag, array $data) 
+	public function fromDbObject(Application_Model_Tag $tag, $data) {
+		$this->fromDbArray($tag, $data->toArray());
+	}
 	
 	public function fromDbArray(Application_Model_Tag $tag, array $data) {
-        parent::fromDbArray($tag, $data);
-        $tag->created = new Zend_Date($tag->created, Zend_Date::ISO_8601);
-        $tag->modified = new Zend_Date($tag->modified, Zend_Date::ISO_8601);
+		$tag->setTagID($data['id'])
+				->setName($data['name'])
+				->setType($data['type'])
+				->setDescription($data['description'])
+				->setRevision($data['revision'])
+				->setUserID($data['user_id'])
+				->setCreated(new Zend_Date($data['created'], Zend_Date::ISO_8601))
+				->setModified(new Zend_Date($data['modified'], Zend_Date::ISO_8601));
+		
 	}
-
-    // }}}
-    // {{{ toDbArray(Application_Model_Tag $tag)
 	
 	public function toDbArray(Application_Model_Tag $tag) {
-        $data = parent::toDbArray($tag);
-        $data['created'] = ($data['created'] ? $data['created']->toString('yyyy-MM-dd HH:mm:ss') : '');
-        $data['modified'] = ($data['modified'] ? $data['modified']->toString('yyyy-MM-dd HH:mm:ss') : ''); 
+		$data = array(
+			'name'=>$tag->getName(),
+			'type'=>$tag->getType(),
+			'description'=>$tag->getDescription(),
+			'revision'=>$tag->getRevision(),
+			'user_id'=>$tag->getUserID(),
+			'created'=>($tag->getCreated() ? $tag->getCreated()->toString('yyyy-MM-dd HH:mm:ss') : null),
+			'modified'=>($tag->getModified() ? $tag->getModified()->toString('yyyy-MM-dd HH:mm:ss') : null),
+		);
 		return $data;
 	}
-
-    // }}}	
+	
 }
 
 ?>

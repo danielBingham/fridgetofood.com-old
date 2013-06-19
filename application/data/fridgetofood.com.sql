@@ -50,6 +50,20 @@ CREATE TABLE `ingredients` (
 	FULLTEXT KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=UTF8;
 
+--
+-- Table structure for table `ingredient_images`
+--
+
+CREATE TABLE `ingredient_images` (
+	`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	`image_id` bigint(20) unsigned,
+	`ingredient_id` bigint(20) unsigned,
+	PRIMARY KEY(`id`),
+	KEY `image_id` (`image_id`),
+	KEY `ingredient_id` (`ingredient_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=UTF8;
+
+
 
 --
 -- Table structure for table `measurement_aliases`
