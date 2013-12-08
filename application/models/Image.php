@@ -25,7 +25,7 @@ class Application_Model_Image extends Application_Model_Abstract {
 
 	
 	public function fileExists($size='medium') {
-		$path = '/srv/www/img.fridgetofood.com/' . $size . '/' . $this->getImageID() . '.jpg';
+		$path = Zend_Registry::get('config')->paths->images->{$size} . '/' . $this->getImageID() . '.jpg';
 		return file_exists($path);
 		
 	}

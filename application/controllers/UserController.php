@@ -23,7 +23,7 @@ class UserController extends Zend_Controller_Action {
     
     public function profileAction() {
     	$userID = $this->getRequest()->getParam('id', NULL);
-        $tab = $this->getRequest()->getParam('tab', 'recipes'); 
+        $tab = $this->getRequest()->getParam('tab', 'images'); 
         $page = $this->getRequest()->getParam('page', 1); 
         $order = $this->getRequest()->getParam('order', 'votes');
 
