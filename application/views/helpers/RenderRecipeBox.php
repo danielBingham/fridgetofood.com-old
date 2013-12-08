@@ -16,9 +16,6 @@ class Zend_View_Helper_RenderRecipeBox extends Zend_View_Helper_Abstract {
 					<?php  echo $recipe->getTitle(); ?>
 				</a>
 			</div>
-			<div class="posterInfo">
-				<p>recipe added by <a href="/user/profile/id/<?php echo $recipe->getUser()->getUserID(); ?>"><?php echo $recipe->getUser()->getDisplayName(); ?></a> (<?php echo $recipe->getUser()->getReputation(); ?> )</p>
-			</div>
 			<div class="left">
 				<p class="leftText"><?php echo $recipe->getVoteTotal() ?></p>
 				<span class="leftDescription">votes</span>
