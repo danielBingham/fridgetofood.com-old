@@ -30,6 +30,7 @@ class Application_Service_ImageUploader {
         $persistor = new Application_Model_Persistor_Image();
         $persistor->save($image);
 
+
         return $image;
     }
 

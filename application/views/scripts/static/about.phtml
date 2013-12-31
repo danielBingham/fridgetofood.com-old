@@ -4,51 +4,11 @@
         <div class="title">What is Fridge to Food?</div>
     </div>
 
-    <p>Fridge to Food is a collaborative cookbook.  It is a place to share recipes with other
-    foodies and earn reputation for the recipes you share.  It is a place to come to find
-    cool new recipes to try, or to find recipes to make with what you have on hand.</p>
+	<p>Fridge to Food is a collaborative cookbook.  It is a place to share
+	recipes with other foodies.  It is a place to come to find cool new recipes
+	to try, or to find recipes to make with what you have on hand.  Basically, 
+	I wanted a recipe database site with certain features and couldn't find one.
+	So I made one and this is it!</p>
 
-
-    <div class="subheader">
-        <div class="title">What is Reputation?</div>
-    </div>
-
-    <p>Reputation is a number that measures how much the Fridge To Food community trusts you as a user and
-    as a chef.  You will earn reputation when you share recipes that other users like, and then upvote.  You 
-    will lose reputation when you share recipes that other users don't like, and downvote.</p>
-
-    <p>You will earn the most reputation for upvotes on recipes that you originated, but you also earn some
-    reputation for upvotes on photographs you post and for community recipes you share.  You can
-    grain reputation in the following ways: </p>
-
-    <div style="margin: 30px auto; width: 600px;">
-        <ul>
-            <li>You will gain 10 reputation for upvotes on recipes you originated.</li>
-            <li>You will lose 10 reputation for downvotes on recipes you originated.</li>
-            <li>You will gain 5 reputation for upvotes on photographs you post.</li>
-            <li>You will lose 5 reputation for downvotes on photographs you post.</li>
-            <li>You will gain 2 reputation for upvotes on community recipes you share.</li>
-            <li>You will lose 2 reputation for downvotes on community recipes you share.</li>
-        </ul>
-    </div>
-
-    <div class="subheader">
-        <div class="title">What are Ribbons?</div>
-    </div>
-	<p>Ribbons are little badges of honor earned when you complete certain tasks or milestones. 
-    Green ribbons mark simple milestones, reached through normal use of the site. 
-	White ribbons are earned by users who actively post, vote, and comment.  
-    Red ribbons mark major milestones that will be reached only by very dedicated users and good chefs.
-	Finally, blue ribbons are earned only by a very few for excellent recipes and photographs.</p>
-	<?php foreach(Application_Model_Query_Ribbon::getInstance()->fetchAll() as $ribbon) { ?>
-		<div class="ribbonWrapper">
-			<div class="ribbonCount">
-				<div class="ribbon <?php echo $ribbon->getType(); ?>">
-					 <?php echo $ribbon->getDisplayName(); ?>
-				</div> <div class="count"> x <?php echo $ribbon->getNumberEarned(); ?></div>
-			</div>
-			<span class="description"><?php echo $ribbon->getDescription(); ?></span>
-		</div>
-	<?php } ?>
 
 </div>

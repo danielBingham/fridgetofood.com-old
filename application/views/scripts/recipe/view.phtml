@@ -13,29 +13,7 @@
 
         <!-- {{{ poster -->
 
-		<div id="poster">
-			<?php if($this->recipe->getUser()->getProfileImage()) { ?>
-				<div class="image" 
-                        style="background: url('<?php echo Zend_Registry::get('config')->hosts->image . '/small/' . $this->recipe->getUser()->getImageID() . '.jpg'; ?>');">
-                </div>
-			<?php } else { ?>
-				<div class="image" style="background-color: #EEEEEE;"></div>
-			<?php } ?>
-			<p><?php echo ($this->recipe->isCommunity() ? 'community ' : ''); ?>recipe added <?php echo $this->recipe->getCreated(); ?> by</p>
-			<a href="/user/profile/id/<?php echo $this->recipe->getUser()->getUserID(); ?>"><?php echo $this->recipe->getUser()->getDisplayName(); ?></a>
-			<span class=" cookies">(<?php echo $this->recipe->getUser()->getReputation(); ?>)</span>
-			<?php $this->renderUserRibbons($this->recipe->getUser()); ?>
-	 	</div>
 		<p>
-			<?php 
-				if($this->recipe->getIntro()) {
-					echo str_replace("\n", "<br>", $this->recipe->getIntro()); 
-				}
-				if($this->recipe->getBlogURL() && $this->recipe->getIntro()) { ?>
-					<a href="<?php echo $this->recipe->getBlogURL(); ?>">Read More...</a>
-			<?php } else if($this->recipe->getBlogURL()) { ?>
-					<a href="<?php echo $this->recipe->getBlogURL(); ?>">Read more about this recipe!</a>
-			<?php } ?>
 		</p>
 	</div>
 
@@ -110,6 +88,12 @@
     <!-- {{{ general -->
 
 	<div id="general" >
+		<?php if($this->recipe->getBlogURL()) { ?>
+			<p class=" generalField">
+				<span class=" generalFieldLabel">Shared by Blog</span>
+				<a href="<?php echo $this->recipe->getBlogURL(); ?>">Read the Post!</a>
+			</p>
+		<?php } ?>
 		<p class=" generalField">
 			<span class=" generalFieldLabel">Source</span>
 			<?php 
@@ -230,8 +214,7 @@
 								<div class="image" style="background-color: #EEEEEE;"></div>
 							<?php } ?>
 							<div class=" commentWrapper">
-								<?php echo $comment->getCreated(); ?> <a  href="/profile/<?PHP echo $comment->getUser()->getUserID(); ?>"><?php echo $comment->getUser()->getDisplayName(); ?></a>
-								<span class=" cookies">(<?php echo $comment->getUser()->getReputation(); ?>)</span> said...
+								<?php echo $comment->getCreated(); ?> <a  href="/profile/<?PHP echo $comment->getUser()->getUserID(); ?>"><?php echo $comment->getUser()->getDisplayName(); ?></a> said...
 								<p class=" commentContent"><?php echo str_replace("\n", "<br>", $comment->getContent()); ?></p>
 							</div>
 						</div>

@@ -1,5 +1,5 @@
 <div class="header" >
-	<div class="title"><?php echo $this->user->getDisplayName(); ?> has <?php echo $this->user->getReputation(); ?> reputation </div>
+	<div class="title"><?php echo $this->user->getDisplayName(); ?></div>
 	<div class="controls" >
 
 		<?php if(Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getIdentity()->getUserID() == $this->user->getUserID()) { ?>
@@ -37,69 +37,22 @@
 	</div>
 	
 	<div class="clear"></div>
-	
-	<div class="header"><div class="title">ribbons earned</div></div>
-	<div id="ribbons">
-    <?PHP $types = array('blue', 'red', 'white', 'rainbow'); ?>
-	<?PHP foreach($types as $type) { ?>
-        <?PHP if(isset($this->ribbons[$type])) { ?>
-            <?PHP foreach($this->ribbons[$type] as $name => $ribbon) { ?>
-                <div class="ribbon-wrapper">
-                    <div class="ribbon <?PHP echo $type; ?>" title="<?PHP echo $ribbon['ribbon']->getDescription(); ?>" >
-                        <?PHP echo $ribbon['ribbon']->getDisplayName(); ?>
-                    </div>
-                    <?PHP echo ($ribbon['count'] > 1 ? 'x' . $ribbon['count']: ''); ?>
-                </div>
-            <?PHP } ?>
-        <?PHP } ?>
-	<?PHP } ?>
-	</div>
 	<!--  Begin recipe browsing area. -->
 	<div class="tabbedHeader">
 		<div class="title">
 		</div>
-		<div class="controls">
-		    <a href="/user/profile/tab/recipes/id/<?php echo $this->user->getUserID(); ?>" <?php echo ($this->tab == 'recipes' ? 'class="highlight"' : ''); ?>>recipes</a>
-            <a href="/user/profile/tab/images/id/<?php echo $this->user->getUserID(); ?>" <?php echo ($this->tab == 'images' ? 'class="highlight"' : ''); ?>>photographs</a>	
-		</div>
 	</div>
     <div class="header">
         <div class="title">
-            <?php
-                switch($this->tab) {
-                    case 'recipes': ?>
-			            browsing <?php echo $this->recipes->getTotalItemCount(); ?> recipes
-                <?php break;
-                    case 'images': ?>
-                        browsing <?php echo $this->photos->getTotalItemCount(); ?> photos
-                <?php break;
-                } ?>
+			browsing <?php echo $this->photos->getTotalItemCount(); ?> photos
         </div>
         <div class="controls">
-        <?php
-            switch($this->tab) {
-                case 'recipes': ?>
-                    <a href="/user/profile/tab/recipes/id/<?php echo $this->user->getUserID(); ?>/order/votes/">Most Votes</a>
-                    <a href="/user/profile/tab/recipes/id/<?php echo $this->user->getUserID(); ?>/order/views/">Most Views</a>
-                    <a href="/user/profile/tab/recipes/id/<?php echo $this->user->getUserID(); ?>/order/newest/">Newest</a> 
-            <?php break;
-                case 'images': ?>
-                    <a href="/user/profile/tab/images/id/<?php echo $this->user->getUserID(); ?>/order/votes/">Most Votes</a>
-                    <a href="/user/profile/tab/images/id/<?php echo $this->user->getUserID(); ?>/order/views/">Most Views</a>
-                    <a href="/user/profile/tab/images/id/<?php echo $this->user->getUserID(); ?>/order/newest/">Newest</a> 
-            <?php break;
-            } 
-        ?>
+			<a href="/user/profile/tab/images/id/<?php echo $this->user->getUserID(); ?>/order/votes/">Most Votes</a>
+			<a href="/user/profile/tab/images/id/<?php echo $this->user->getUserID(); ?>/order/views/">Most Views</a>
+			<a href="/user/profile/tab/images/id/<?php echo $this->user->getUserID(); ?>/order/newest/">Newest</a> 
         </div>
     </div>
     <?php
-        switch($this->tab) {
-            case 'recipes': 
-        	    $this->renderItemPager($this->recipes, 'renderRecipeBox'); 
-                break;
-            case 'images':
-	            $this->renderItemPager($this->photos, 'renderImageBox'); 
-                break;
-        } 
+		$this->renderItemPager($this->photos, 'renderImageBox'); 
     ?>
 </div>

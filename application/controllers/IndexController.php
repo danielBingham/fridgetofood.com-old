@@ -13,6 +13,5 @@ class IndexController extends Zend_Controller_Action
         $this->_forward('index', 'recipe', null, $this->getRequest()->getParams());
     }
 
-
 }
 
