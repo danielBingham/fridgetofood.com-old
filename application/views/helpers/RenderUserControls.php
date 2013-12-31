@@ -34,7 +34,6 @@ class Zend_View_Helper_RenderUserControls extends Zend_View_Helper_Abstract {
 		    $output =  '<span class="menuItem">' 
 			. '     <a href="/user/profile/id/' . $this->getUser()->getUserID() . '">' . $this->getUser()->getDisplayName() . '</a>' 
 			. '</span> '
-		    . $this->view->renderUserRibbons($this->getUser()) 
 			. ' <span class="menuItem"><a href="/login/logout">Logout</a></span> ';
 
 		} else {

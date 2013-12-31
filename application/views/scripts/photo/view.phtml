@@ -28,8 +28,7 @@
 		<?PHP } ?>
 		posted <?PHP echo $this->image->getCreated(); ?> 
 		by<br />
-		<a href="/user/profile/id/<?PHP echo $this->image->getUser()->getUserID(); ?>"><?PHP echo $this->image->getUser()->getDisplayName(); ?></a>(<?PHP echo $this->image->getUser()->getReputation(); ?>)
-		<?PHP $this->renderUserRibbons($this->image->getUser()); ?>
+		<a href="/user/profile/id/<?PHP echo $this->image->getUser()->getUserID(); ?>"><?PHP echo $this->image->getUser()->getDisplayName(); ?></a>
 	</div>
 	<div id="votesWrapper" >
 		<div id="votes" >

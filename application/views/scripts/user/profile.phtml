@@ -37,23 +37,6 @@
 	</div>
 	
 	<div class="clear"></div>
-	
-	<div class="header"><div class="title">ribbons earned</div></div>
-	<div id="ribbons">
-    <?PHP $types = array('blue', 'red', 'white', 'rainbow'); ?>
-	<?PHP foreach($types as $type) { ?>
-        <?PHP if(isset($this->ribbons[$type])) { ?>
-            <?PHP foreach($this->ribbons[$type] as $name => $ribbon) { ?>
-                <div class="ribbon-wrapper">
-                    <div class="ribbon <?PHP echo $type; ?>" title="<?PHP echo $ribbon['ribbon']->getDescription(); ?>" >
-                        <?PHP echo $ribbon['ribbon']->getDisplayName(); ?>
-                    </div>
-                    <?PHP echo ($ribbon['count'] > 1 ? 'x' . $ribbon['count']: ''); ?>
-                </div>
-            <?PHP } ?>
-        <?PHP } ?>
-	<?PHP } ?>
-	</div>
 	<!--  Begin recipe browsing area. -->
 	<div class="tabbedHeader">
 		<div class="title">

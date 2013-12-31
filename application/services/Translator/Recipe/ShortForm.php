@@ -34,10 +34,6 @@ class Application_Service_Translator_Recipe_ShortForm {
         $recipe->setPreparationTime($post['recipe']['preparation_time']);
         $recipe->setServes($post['recipe']['serves']);       
         $recipe->setViews(0); 
-       
-        if(isset($post['recipe']['is_community'])) {
-            $recipe->setCommunity(true);
-        }
 
         $sections = array(); 
         $section = new Application_Model_RecipeSection();

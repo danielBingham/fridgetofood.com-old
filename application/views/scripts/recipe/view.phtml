@@ -214,8 +214,7 @@
 								<div class="image" style="background-color: #EEEEEE;"></div>
 							<?php } ?>
 							<div class=" commentWrapper">
-								<?php echo $comment->getCreated(); ?> <a  href="/profile/<?PHP echo $comment->getUser()->getUserID(); ?>"><?php echo $comment->getUser()->getDisplayName(); ?></a>
-								<span class=" cookies">(<?php echo $comment->getUser()->getReputation(); ?>)</span> said...
+								<?php echo $comment->getCreated(); ?> <a  href="/profile/<?PHP echo $comment->getUser()->getUserID(); ?>"><?php echo $comment->getUser()->getDisplayName(); ?></a> said...
 								<p class=" commentContent"><?php echo str_replace("\n", "<br>", $comment->getContent()); ?></p>
 							</div>
 						</div>
