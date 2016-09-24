@@ -1,1 +1,6 @@
 *.swp
+<<<<<<< HEAD
+=======
+
+application/configs/application.ini
+>>>>>>> master
